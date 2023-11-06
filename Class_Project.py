@@ -61,6 +61,10 @@ def mainApp():
     currCol = 0
     currRow = 0
     ttk.Label(tab2,text = "Degree type:").grid(column=currCol,row=currRow)
+    currCol += 1
+    #thanks:https://www.geeksforgeeks.org/combobox-widget-in-tkinter-python/?ref=lbp
+    n = tk.StringVar() 
+    DegreeType = ttk.Combobox(tab2, width = 27, textvariable = n, values = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]).grid(column=currCol,row=currRow)
     
     root.mainloop()   
 global genericEducation
