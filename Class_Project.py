@@ -29,7 +29,8 @@ def mainApp():
     tabControl.add(tab4, text ='Skills')
     tabControl.add(tab5, text ='Other')
     tabControl.add(tab6, text ='Output/print/load')
-    tabControl.pack(expand = 1, fill ="both") 
+    tabControl.pack(expand = 1, fill ="both")
+    #now that the tab structure is done, on to populating our first tab 
     currRow = 0
     ttk.Label(tab1, text ="enter your information below: ").grid(row=currRow)
     currRow += 1
@@ -56,11 +57,11 @@ def mainApp():
     currRow += 1
     ttk.Label(tab1, text ="Describe yourself: ").grid(row=currRow,column=0)
     userDescription = Entry(tab1).grid(row=currRow,column=1)
+    #this is tab1 done, now for tab2
     currCol = 0
     currRow = 0
-    
     ttk.Label(tab2,text = "Degree type:").grid(column=currCol,row=currRow)
-  
+    
     root.mainloop()   
 global genericEducation
 global genericWork
