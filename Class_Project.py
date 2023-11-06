@@ -93,7 +93,7 @@ def mainApp():
     schoolState = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']).grid(column=currCol,row=currRow)
     currRow += 1
     currCol = 0
-    ttk.Label(tab2, text="Graduation date")
+    ttk.Label(tab2, text="Graduation date: ")
     
     root.mainloop()   
 global genericEducation
