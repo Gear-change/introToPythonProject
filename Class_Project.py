@@ -63,8 +63,37 @@ def mainApp():
     ttk.Label(tab2,text = "Degree type:").grid(column=currCol,row=currRow)
     currCol += 1
     #thanks:https://www.geeksforgeeks.org/combobox-widget-in-tkinter-python/?ref=lbp
-    n = tk.StringVar() 
-    DegreeType = ttk.Combobox(tab2, width = 27, textvariable = n, values = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]).grid(column=currCol,row=currRow)
+    DegreeType = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]).grid(column=currCol,row=currRow)
+    currCol+=1
+    ttk.Label(tab2, text="Degree Field: ").grid(column=currCol,row=currRow)
+    currCol+=1
+    DegreeField = Entry(tab2).grid(column=currCol,row=currRow)
+    currCol = 2
+    currRow +=1
+    ttk.Label(tab2, text="Degree Subfield: ").grid(column=currCol,row=currRow)
+    currCol+=1
+    degreeSubField = Entry(tab2).grid(column=currCol,row=currRow)
+    currCol = 0
+    currRow += 1
+    ttk.Label(tab2, text="Address of School: ").grid(column=currCol,row=currRow)
+    currCol+=1
+    schoolAddress1 = Entry(tab2).grid(column=currCol,row=currRow)
+    currCol+=1
+    ttk.Label(tab2, text="School City").grid(column=currCol,row=currRow)
+    currCol+=1
+    schoolCity = Entry(tab2).grid(column=currCol,row=currRow)
+    currCol = 0
+    currRow+=1
+    ttk.Label(tab2, text="Address line 2:").grid(column=currCol,row=currRow)
+    currCol+=1
+    schoolAddress2 = Entry(tab2).grid(column=currCol,row=currRow)
+    currCol+=1
+    ttk.Label(tab2, text="School State: ").grid(column=currCol,row=currRow)
+    currCol+=1
+    schoolState = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']).grid(column=currCol,row=currRow)
+    currRow += 1
+    currCol = 0
+    ttk.Label(tab2, text="Graduation date")
     
     root.mainloop()   
 global genericEducation
@@ -88,6 +117,7 @@ genericEducation = {
     "SchoolType":"",
     "degreeSubField":"",
     "schoolAddress1":"",
+    "schoolAddress2":"",
     "gradeGPA":0,
     "schoolCity":"",
     "schoolState":"",
