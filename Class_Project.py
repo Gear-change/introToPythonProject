@@ -2,6 +2,22 @@
 
 import tkinter as tk                     
 from tkinter import Entry, Grid, ttk 
+def addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolCity, schoolAddress2, schoolState, SchoolDateEndMonth, SchoolDateEndYear, SchoolDateStartMonth, SchoolDateStartYear,GPA):
+    global userEducation
+    global genericEducation
+    newEducation = genericEducation.copy()
+    newEducation["degreeType"] = DegreeType
+    newEducation["degreeField"] = DegreeField
+    newEducation["degreeSubField"] = degreeSubField
+    newEducation["schoolAddress1"] = schoolAddress1
+    newEducation["schoolAddress2"] = schoolAddress2
+    newEducation["gradeGPA"] = GPA
+    newEducation["schoolCity"] = schoolCity
+    newEducation["schoolState"] = schoolState
+    newEducation["dateStartYear"] = SchoolDateStartYear
+    newEducation["dateStartMonth"] = SchoolDateStartMonth
+    newEducation["dateEndYear"] = SchoolDateEndYear
+    newEducation["dateEndMonth"] = SchoolDateEndMonth
 
 def mainApp():
     global firstName  
@@ -12,9 +28,8 @@ def mainApp():
     global userState
     global userEmail
     global userDescription
-
     root = tk.Tk() 
-    root.title("Tab Widget") 
+    root.title("Resume Generator") 
     tabControl = ttk.Notebook(root) 
   
     tab1 = ttk.Frame(tabControl) 
@@ -63,12 +78,12 @@ def mainApp():
     ttk.Label(tab2,text = "Degree type:").grid(column=currCol,row=currRow)
     currCol += 1
     #thanks:https://www.geeksforgeeks.org/combobox-widget-in-tkinter-python/?ref=lbp
-    DegreeType = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]).grid(column=currCol,row=currRow)
-    currCol+=1
+    DegreeType = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]).grid(column=currCol,row=currRow, columnspan=3)
+    currCol+=3
     ttk.Label(tab2, text="Degree Field: ").grid(column=currCol,row=currRow)
     currCol+=1
     DegreeField = Entry(tab2).grid(column=currCol,row=currRow)
-    currCol = 2
+    currCol = 4
     currRow +=1
     ttk.Label(tab2, text="Degree Subfield: ").grid(column=currCol,row=currRow)
     currCol+=1
@@ -77,8 +92,8 @@ def mainApp():
     currRow += 1
     ttk.Label(tab2, text="Address of School: ").grid(column=currCol,row=currRow)
     currCol+=1
-    schoolAddress1 = Entry(tab2).grid(column=currCol,row=currRow)
-    currCol+=1
+    schoolAddress1 = Entry(tab2).grid(column=currCol,row=currRow,columnspan=3)
+    currCol+=3
     ttk.Label(tab2, text="School City").grid(column=currCol,row=currRow)
     currCol+=1
     schoolCity = Entry(tab2).grid(column=currCol,row=currRow)
@@ -86,15 +101,42 @@ def mainApp():
     currRow+=1
     ttk.Label(tab2, text="Address line 2:").grid(column=currCol,row=currRow)
     currCol+=1
-    schoolAddress2 = Entry(tab2).grid(column=currCol,row=currRow)
-    currCol+=1
+    schoolAddress2 = Entry(tab2).grid(column=currCol,row=currRow,columnspan=3)
+    currCol+=3
     ttk.Label(tab2, text="School State: ").grid(column=currCol,row=currRow)
     currCol+=1
     schoolState = ttk.Combobox(tab2, width = 27, textvariable = tk.StringVar() , values = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']).grid(column=currCol,row=currRow)
     currRow += 1
     currCol = 0
-    ttk.Label(tab2, text="Graduation date: ")
-    
+    ttk.Label(tab2, text="Graduation date: ").grid(column=currCol,row=currRow)
+    currCol += 1
+    #date frame construct
+    SchoolDateEndMonth = ttk.Combobox(tab2, width = 5, textvariable = tk.StringVar() , values = ['1','2','3','4','5','6','7','8','9','10','11','12']).grid(column=currCol,row=currRow)
+    yearsList= []
+    currCol +=1
+    ttk.Label(tab2, text=" - ").grid(column=currCol,row=currRow)
+    for x in range(1950,2050):
+        yearsList.append(str(x))      
+    currCol +=1  
+    SchoolDateEndYear = ttk.Combobox(tab2, width = 5, textvariable = tk.StringVar() , values = yearsList).grid(column=currCol,row=currRow)
+    currCol +=1
+    ttk.Label(tab2, text="GPA: ").grid(column=currCol, row=currRow)
+    currCol +=1
+    GPA = Entry(tab2).grid(column=currCol,row=currRow)
+    #date frame construct
+    currRow += 1
+    currCol = 0
+    ttk.Label(tab2, text="Start date: ").grid(column=currCol,row=currRow)
+    currCol +=1
+    SchoolDateStartMonth = ttk.Combobox(tab2, width = 5, textvariable = tk.StringVar() , values = ['1','2','3','4','5','6','7','8','9','10','11','12']).grid(column=currCol,row=currRow)
+    currCol +=1
+    ttk.Label(tab2, text=" - ").grid(column=currCol,row=currRow)
+    currCol +=1
+    SchoolDateStartYear = ttk.Combobox(tab2, width = 5, textvariable = tk.StringVar(), values = yearsList).grid(column=currCol,row=currRow)
+    #add the button to call the function to add an education
+    currCol +=2
+    btnSchoolSubmit = tk.Button(tab2, text="add Degree", command=addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolCity, schoolAddress2, schoolState, SchoolDateEndMonth, SchoolDateEndYear, SchoolDateStartMonth, SchoolDateStartYear,GPA))
+    btnSchoolSubmit.grid(column=currCol,row=currRow)
     root.mainloop()   
 global genericEducation
 global genericWork
@@ -114,15 +156,16 @@ global userProjects
 genericEducation = {
     "degreeType":"",
     "degreeField":"",
-    "SchoolType":"",
     "degreeSubField":"",
     "schoolAddress1":"",
     "schoolAddress2":"",
     "gradeGPA":0,
     "schoolCity":"",
     "schoolState":"",
-    "dateStart":"",
-    "dateEnd":"",
+    "dateStartYear":0,
+    "dateStartMonth":0,
+    "dateEndYear":0,
+    "dateEndMonth":0,
     "isRelevent":True
 }
 genericWork = {
