@@ -1,7 +1,26 @@
 #https://www.geeksforgeeks.org/creating-tabbed-widget-with-python-tkinter/
-
 import tkinter as tk                     
 from tkinter import Entry, Grid, ttk 
+global DegreeFrame
+DegreeFrame = tk.Frame()
+
+def degreeDelete(degreeNum):
+    global userEducation
+    userEducation.pop(degreeNum)
+    mainApp()
+
+
+def degreeToString(degree):
+    try:
+        stringOut = degree.get("degreeType") + " in " + degree.get("degreeField") + ":" +("degreeSubField")
+        return stringOut
+    except:
+        print("error degree")
+        print(degree)
+        return " "
+    
+
+
 def addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolCity, schoolAddress2, schoolState, SchoolDateEndMonth, SchoolDateEndYear, SchoolDateStartMonth, SchoolDateStartYear,GPA):
     global userEducation
     global genericEducation
@@ -18,8 +37,14 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolC
     newEducation["dateStartMonth"] = SchoolDateStartMonth
     newEducation["dateEndYear"] = SchoolDateEndYear
     newEducation["dateEndMonth"] = SchoolDateEndMonth
+    userEducation.append(newEducation)
+    global degreeNum
+    global DegreeFrame
+    mainApp()
+
 
 def mainApp():
+    global root
     global firstName  
     global lastName
     global userAddressLine1
@@ -137,7 +162,23 @@ def mainApp():
     currCol +=2
     btnSchoolSubmit = tk.Button(tab2, text="add Degree", command=addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolCity, schoolAddress2, schoolState, SchoolDateEndMonth, SchoolDateEndYear, SchoolDateStartMonth, SchoolDateStartYear,GPA))
     btnSchoolSubmit.grid(column=currCol,row=currRow)
-    root.mainloop()   
+    currCol =0
+    currRow +=1
+    #now to make the selection interface
+    global degreeNum
+    degreeNum = 0
+    global DegreeFrame
+    global userEducation
+    for degree in userEducation:
+        newCheckbox = tk.Checkbutton(DegreeFrame, text=degreeToString(degree),
+                                     variable=userEducation[degreeNum], 
+                                     onvalue=True,
+                                     offvalue=False)
+        newCheckbox.grid(column=0,row=degreeNum)
+        newButton = tk.Button(DegreeFrame, text="delete degree", command=(degreeDelete(degreeNum)))
+        newButton.grid(column=1, row=degreeNum)
+        degreeNum += 1
+    DegreeFrame.grid(column=currCol,row=currRow,columnspan=5)   
 global genericEducation
 global genericWork
 global genericSkill
@@ -190,3 +231,5 @@ userWork = []
 userProjects = []
 userSkills = []
 mainApp()
+global root
+root.mainloop()
