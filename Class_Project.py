@@ -271,13 +271,13 @@ def mainApp():
 global genericEducation
 global genericWork
 global genericSkill
+global genericProject
 global firstName  
+global middleInitial
 global lastName
-global userAddressLine1
-global userAddressLine2
-global userCity
-global userState
-global userEmail
+global userLinkedin
+global userGithub
+global userPhone
 global userDescription
 global userEducation
 global userWork
@@ -286,34 +286,52 @@ global userProjects
 genericEducation = {
     "degreeType":"",
     "degreeField":"",
-    "degreeSubField":"",
-    "schoolAddress1":"",
-    "schoolAddress2":"",
+    "degreeMinor":"",
     "gradeGPA":0,
+    "schoolName":"",
     "schoolCity":"",
     "schoolState":"",
-    "dateStartYear":0,
-    "dateStartMonth":0,
     "dateEndYear":0,
     "dateEndMonth":0,
-    "isRelevent":True
+    "isRelevent":True,
+    "degreeDetails":[
+        {
+            "degreeDetail":"",
+            "isRelevent":True
+        }
+    ],
 }
 genericWork = {
     "companyName":"",
-    "companyAddress":"",
-    "companyPhone":"",
-    "bossName":"",
-    "supervisorName":"",
-    "occupation":"",
-    "workStart":"",
-    "workFinish":"",
-    "reasonForEnd":"",
+    "companyCity":"",
+    "companyState":"",
+    "companyCity":"",
+    "occupationTitle":"",
+    "occupationDetails":[{
+        "OccupationDetail":"",
+        "isRelevent":True
+    }],
     "isRelevent":True,
+    "dateEndYear":0,
+    "dateEndMonth":0,
+    "dateStartYear":0,
+    "dateStartMonth":0,
 }
 genericSkill = {
     "skillName":"",
     "skillYears":"",
     "isRelevent":True,
+}
+genericProject = {
+    "projectName":"",
+    "hasEvent":True,
+    "eventName":"",
+    "month":0,
+    "year":0,
+    "projectDetails":[{
+        "OccupationDetail":"",
+        "isRelevent":True
+    }],
 }
 userEducation=[]
 userWork = []
