@@ -43,15 +43,18 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolC
     newButton.grid(column=1, row=degreeNum)
 
 def mainApp():
-    global userEducation
     global firstName  
+    global middleInitial
     global lastName
-    global userAddressLine1
-    global userAddressLine2
-    global userCity
-    global userState
+    global userLinkedin
+    global userGithub
+    global userPhone
     global userEmail
     global userDescription
+    global userEducation
+    global userWork
+    global userSkills
+    global userProjects
     #https://www.geeksforgeeks.org/creating-tabbed-widget-with-python-tkinter/
     root = tk.Tk() 
     root.title("Resume Generator") 
@@ -77,26 +80,24 @@ def mainApp():
     ttk.Label(tab1, text ="First Name: ").grid(row=currRow,column=0)
     firstName = Entry(tab1).grid(row=currRow,column=1)
     currRow += 1
+    ttk.Label(tab1, text ="Middle Initial: ").grid(row=currRow,column=0)
+    middleInitial = Entry(tab1).grid(row=currRow,column=1)
+    currRow += 1
     ttk.Label(tab1, text ="Last Name: ").grid(row=currRow,column=0)
     lastName = Entry(tab1).grid(row=currRow,column=1)
     currRow += 1
-    ttk.Label(tab1, text ="Address line 1: ").grid(row=currRow,column=0)
-    userAddressLine1 = Entry(tab1).grid(row=currRow,column=1)
+    ttk.Label(tab1, text ="Linkedin Profile: ").grid(row=currRow,column=0)
+    userLinkedin = Entry(tab1).grid(row=currRow,column=1)
     currRow += 1
-    ttk.Label(tab1, text ="Address line 2: ").grid(row=currRow,column=0)
-    userAddressLine2 = Entry(tab1).grid(row=currRow,column=1)
-    currRow += 1
-    ttk.Label(tab1, text ="City: ").grid(row=currRow,column=0)
-    userCity = Entry(tab1).grid(row=currRow,column=1)
-    currRow += 1
-    ttk.Label(tab1, text ="State: ").grid(row=currRow,column=0)
-    userState = Entry(tab1).grid(row=currRow,column=1)
+    ttk.Label(tab1, text ="Github Profile(optional): ").grid(row=currRow,column=0)
+    userGithub = Entry(tab1).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Email: ").grid(row=currRow,column=0)
     userEmail = Entry(tab1).grid(row=currRow,column=1)
     currRow += 1
-    ttk.Label(tab1, text ="Describe yourself: ").grid(row=currRow,column=0)
-    userDescription = Entry(tab1).grid(row=currRow,column=1)
+    ttk.Label(tab1, text ="Email: ").grid(row=currRow,column=0)
+    userEmail = Entry(tab1).grid(row=currRow,column=1)
+    currRow += 1
     #this is tab1 done, now for tab2
     currCol = 0
     currRow = 0
@@ -278,6 +279,7 @@ global lastName
 global userLinkedin
 global userGithub
 global userPhone
+global userEmail
 global userDescription
 global userEducation
 global userWork
