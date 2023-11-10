@@ -285,6 +285,7 @@ global userEducation
 global userWork
 global userSkills
 global userProjects
+#each education will use this structure,and be stored in the userEducation list
 genericEducation = {
     "degreeType":"",
     "degreeField":"",
@@ -303,6 +304,7 @@ genericEducation = {
         }
     ],
 }
+#each Work will use this structure,and be stored in the userWork list
 genericWork = {
     "companyName":"",
     "companyCity":"",
@@ -319,11 +321,13 @@ genericWork = {
     "dateStartYear":0,
     "dateStartMonth":0,
 }
+#each Skill will use this structure,and be stored in the userSkills list
 genericSkill = {
     "skillName":"",
     "skillYears":"",
     "isRelevent":True,
 }
+#each Project will use this structure and be stored in the userProjects list
 genericProject = {
     "projectName":"",
     "hasEvent":True,
