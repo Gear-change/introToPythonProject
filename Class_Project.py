@@ -1,6 +1,5 @@
 import tkinter as tk                     
-from tkinter import Entry, Grid, ttk 
-
+from tkinter import Entry, Grid, ttk
 def degreeToString(degree):
     try:
         stringOut = degree.get("degreeType") + " in " + degree.get("degreeField") + ":" +("degreeSubField")
@@ -9,38 +8,35 @@ def degreeToString(degree):
         print("error degree")
         print(degree)
         return " "
-    
-global tab2
-tab2 = None 
-global DegreeFrame
-DegreeFrame = tk.Frame(tab2)
 
-def addNewDegree(DegreeType, DegreeField, degreeSubField,schoolAddress1, schoolCity, schoolAddress2, schoolState, SchoolDateEndMonth, SchoolDateEndYear, SchoolDateStartMonth, SchoolDateStartYear,GPA):
+def makeDegreeList(degreeDetails):
+    tempString = degreeDetails
+    listout = []
+    listTempIn = tempString.split('\n')
+    for item in listTempIn:
+        if len(item) !=0:
+            newDictDetail = {
+                "degreeDetail":item,
+                "isRelevent":True
+                }
+            listout.append(newDictDetail)
+    return(listout)
+
+def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolCity, schoolState, SchoolDateEndMonth, SchoolDateEndYear,GPA,degreeDetails, schoolName):
     global userEducation
     global genericEducation
     newEducation = genericEducation.copy()
     newEducation["degreeType"] = DegreeType
     newEducation["degreeField"] = DegreeField
-    newEducation["degreeSubField"] = degreeSubField
-    newEducation["schoolAddress1"] = schoolAddress1
-    newEducation["schoolAddress2"] = schoolAddress2
+    newEducation["degreeMinor"] = degreeSubField
     newEducation["gradeGPA"] = GPA
     newEducation["schoolCity"] = schoolCity
     newEducation["schoolState"] = schoolState
-    newEducation["dateStartYear"] = SchoolDateStartYear
-    newEducation["dateStartMonth"] = SchoolDateStartMonth
     newEducation["dateEndYear"] = SchoolDateEndYear
     newEducation["dateEndMonth"] = SchoolDateEndMonth
+    newEducation["degreeDetails"] = degreeDetails
+    newEducation["SchoolName"] = schoolName
     userEducation.append(newEducation)
-    global DegreeFrame
-    degreeNum = len(userEducation) - 1
-    newCheckbox = tk.Checkbutton(DegreeFrame, text=degreeToString(newEducation),
-                                     variable=userEducation[degreeNum], 
-                                     onvalue=True,
-                                     offvalue=False)
-    newCheckbox.grid(column=0,row=degreeNum)
-    newButton = tk.Button(DegreeFrame, text="delete degree", command=(userEducation.pop(degreeNum)))
-    newButton.grid(column=1, row=degreeNum)
 
 def mainApp():
     global firstName  
@@ -78,25 +74,28 @@ def mainApp():
     ttk.Label(tab1, text ="enter your information below: ").grid(row=currRow)
     currRow += 1
     ttk.Label(tab1, text ="First Name: ").grid(row=currRow,column=0)
-    firstName = Entry(tab1).grid(row=currRow,column=1)
+    firstName = tk.StringVar()
+    newEntry = Entry(tab1, textvariable=firstName).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Middle Initial: ").grid(row=currRow,column=0)
-    middleInitial = Entry(tab1).grid(row=currRow,column=1)
+    middleInitial = tk.StringVar()
+    newEntry = Entry(tab1,textvariable=middleInitial).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Last Name: ").grid(row=currRow,column=0)
-    lastName = Entry(tab1).grid(row=currRow,column=1)
+    lastName = tk.StringVar()
+    newEntry = Entry(tab1,textvariable=lastName).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Linkedin Profile: ").grid(row=currRow,column=0)
-    userLinkedin = Entry(tab1).grid(row=currRow,column=1)
+    userLinkedin = tk.StringVar()
+    newEntry = Entry(tab1, textvariable=userLinkedin).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Github Profile(optional): ").grid(row=currRow,column=0)
-    userGithub = Entry(tab1).grid(row=currRow,column=1)
+    userGithub = tk.StringVar()
+    newEntry = Entry(tab1, textvariable= userGithub).grid(row=currRow,column=1)
     currRow += 1
     ttk.Label(tab1, text ="Email: ").grid(row=currRow,column=0)
-    userEmail = Entry(tab1).grid(row=currRow,column=1)
-    currRow += 1
-    ttk.Label(tab1, text ="Email: ").grid(row=currRow,column=0)
-    userEmail = Entry(tab1).grid(row=currRow,column=1)
+    userEmail = tk.StringVar()
+    newEntry = Entry(tab1,textvariable=userEmail).grid(row=currRow,column=1)
     currRow += 1
     #this is tab1 done, now for tab2
     currCol = 0
@@ -113,33 +112,51 @@ def mainApp():
     DegreeField = tk.StringVar()
     newEntry = Entry(tab2, width = 27, textvariable=DegreeField )
     newEntry.grid(column=currCol,row=currRow)
-    currCol = 4
+    currCol = 0
     currRow +=1
-    ttk.Label(tab2, text="Degree Subfield: ").grid(column=currCol,row=currRow)
+    ttk.Label(tab2, text="Graduation date: ").grid(column=currCol,row=currRow)
+    currCol += 1
+    SchoolDateEndMonth = tk.IntVar()
+    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateEndMonth , values = [1,2,3,4,5,6,7,8,9,10,11,12])
+    newComboBox.grid(column=currCol,row=currRow)
+    yearsList= []
+    currCol +=1
+    ttk.Label(tab2, text=" - ").grid(column=currCol,row=currRow)
+    for x in range(1950,2050):
+        yearsList.append(x)      
+    currCol +=1  
+    SchoolDateEndYear = tk.IntVar()
+    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateEndYear , values = yearsList)
+    newComboBox.grid(column=currCol,row=currRow)
+    currCol +=1
+    ttk.Label(tab2, text="Degree Minor: ").grid(column=currCol,row=currRow)
     currCol+=1
     degreeSubField = tk.StringVar()
     newEntry = Entry(tab2, width = 27, textvariable=degreeSubField )
     newEntry.grid(column=currCol,row=currRow)
     currCol = 0
     currRow += 1
-    ttk.Label(tab2, text="Address of School: ").grid(column=currCol,row=currRow)
-    currCol+=1
-    schoolAddress1 = tk.StringVar()
-    newEntry = Entry(tab2, width = 27, textvariable=schoolAddress1 )
-    newEntry.grid(column=currCol,row=currRow,columnspan=3)
-    currCol+=3
-    ttk.Label(tab2, text="School City").grid(column=currCol,row=currRow)
+    ttk.Label(tab2, text="Some details about your time getting this degree: ", wraplength=125).grid(column=currCol,row=currRow,rowspan=6)
+    currCol += 1
+    degreeDetails = tk.Text(tab2, width=50, height= 6)
+    degreeDetails.grid(column=currCol,row=currRow,columnspan=3,rowspan=6)
+    currCol+=2
+    currCol += 1
+    ttk.Label(tab2, text="School name: ").grid(column=currCol,row=currRow)
+    currCol +=1
+    schoolName = tk.StringVar()
+    newEntry= Entry(tab2, textvariable=schoolName)
+    newEntry.grid(column=currCol,row=currRow)
+    currCol -= 1
+    currRow += 1
+    ttk.Label(tab2, text="School City: ").grid(column=currCol,row=currRow)
     currCol+=1
     schoolCity = tk.StringVar()
     newEntry = Entry(tab2, width = 27, textvariable=schoolCity )
     newEntry.grid(column=currCol,row=currRow)
     currCol = 0
     currRow+=1
-    ttk.Label(tab2, text="Address line 2:").grid(column=currCol,row=currRow)
     currCol+=1
-    schoolAddress2 = tk.StringVar()
-    newEntry = Entry(tab2, width = 27, textvariable=schoolAddress2 )
-    newEntry.grid(column=currCol,row=currRow,columnspan=3)
     currCol+=3
     ttk.Label(tab2, text="School State: ").grid(column=currCol,row=currRow)
     currCol+=1
@@ -195,25 +212,11 @@ def mainApp():
                                                                                             'Wisconsin',
                                                                                             'Wyoming'
                                                                                             ])
+    schoolState.set('Alabama')
     newComboBox.grid(column=currCol,row=currRow)
     currRow += 1
-    currCol = 0
-    ttk.Label(tab2, text="Graduation date: ").grid(column=currCol,row=currRow)
-    currCol += 1
+    currCol = 4
     #date frame construct
-    SchoolDateEndMonth = tk.IntVar()
-    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateEndMonth , values = [1,2,3,4,5,6,7,8,9,10,11,12])
-    newComboBox.grid(column=currCol,row=currRow)
-    yearsList= []
-    currCol +=1
-    ttk.Label(tab2, text=" - ").grid(column=currCol,row=currRow)
-    for x in range(1950,2050):
-        yearsList.append(x)      
-    currCol +=1  
-    SchoolDateEndYear = tk.IntVar()
-    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateEndYear , values = yearsList)
-    newComboBox.grid(column=currCol,row=currRow)
-    currCol +=1
     ttk.Label(tab2, text="GPA: ").grid(column=currCol, row=currRow)
     currCol +=1
     GPA = tk.DoubleVar()
@@ -222,52 +225,11 @@ def mainApp():
     #date frame construct
     currRow += 1
     currCol = 0
-    ttk.Label(tab2, text="Start date: ").grid(column=currCol,row=currRow)
-    currCol +=1
-    SchoolDateStartMonth = tk.IntVar()
-    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateStartMonth , values = [1,2,3,4,5,6,7,8,9,10,11,12])
-    newComboBox.grid(column=currCol,row=currRow)
-    currCol +=1
-    ttk.Label(tab2, text=" - ").grid(column=currCol,row=currRow)
-    currCol +=1
-    SchoolDateStartYear = tk.IntVar()
-    newComboBox = ttk.Combobox(tab2, width = 5, textvariable = SchoolDateStartYear, values = yearsList)
-    newComboBox.grid(column=currCol,row=currRow)
     #add the button to call the function to add an education
-    currCol +=2
-    btnSchoolSubmit = tk.Button(tab2, 
-                                text="add Degree", 
-                                command=addNewDegree(DegreeType.get(), 
-                                                     DegreeField.get(), 
-                                                     degreeSubField.get(),
-                                                     schoolAddress1.get(), 
-                                                     schoolCity.get(), 
-                                                     schoolAddress2.get(), 
-                                                     schoolState.get(), 
-                                                     SchoolDateEndMonth.get(), 
-                                                     SchoolDateEndYear.get(), 
-                                                     SchoolDateStartMonth.get(),
-                                                     SchoolDateStartYear.get(),
-                                                     GPA.get()))
+    currCol +=5
+    btnSchoolSubmit = tk.Button(tab2, text="add Degree", 
+                                command = (lambda :addNewDegree(DegreeType.get(),DegreeField.get(), degreeSubField.get(), schoolCity.get(),  schoolState.get(),  SchoolDateEndMonth.get(), SchoolDateEndYear.get(), GPA.get(),makeDegreeList(degreeDetails.get("1.0", 'end-1c')),schoolName.get())))
     btnSchoolSubmit.grid(column=currCol,row=currRow)
-    global DegreeFrame
-    DegreeFrame = tk.Frame(tab2)
-    if (len(userEducation) < 0):
-        currCol =0
-        currRow +=1
-        #now to make the selection interface
-        global degreeNum
-        degreeNum = 0
-        for degree in userEducation:
-            newCheckbox = tk.Checkbutton(DegreeFrame, text=degreeToString(degree),
-                                     variable=userEducation[degreeNum], 
-                                     onvalue=True,
-                                     offvalue=False)
-            newCheckbox.grid(column=0,row=degreeNum)
-            newButton = tk.Button(DegreeFrame, text="delete degree", command=(userEducation.pop(degreeNum)))
-            newButton.grid(column=1, row=degreeNum)
-            degreeNum += 1
-        DegreeFrame.grid(column=currCol,row=currRow,columnspan=5)   
     root.mainloop()   
 global genericEducation
 global genericWork
