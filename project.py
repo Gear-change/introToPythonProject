@@ -8,8 +8,8 @@ def degreeToString(degree):
         print(f"Key error: {e} in degree")
         return " "
 
-def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolCity, schoolState, 
-                 SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails, schoolName):
+def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity, schoolState, 
+                 SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails, ):
     newEducation = {
         "degreeType": DegreeType,
         "degreeField": DegreeField,
@@ -23,6 +23,7 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolCity, schoolStat
         "dateEndMonth": SchoolDateEndMonth
     }
     userEducation.append(newEducation)
+    print(newEducation)
 
 def makePersonalInformationtab(tab1, firstName, middleInitial, lastName, userLinkedin, 
                                userGithub, userPhone, userEmail):
@@ -50,19 +51,6 @@ def makePersonalInformationtab(tab1, firstName, middleInitial, lastName, userLin
     newEntryFrame.grid(column=currCol,row=currRow)
     currRow += 1
 
-def makeDegreeDetailList(degreeDetails):
-    tempString = degreeDetails
-    listout = []
-    listTempIn = tempString.split('\n')
-    for item in listTempIn:
-        if len(item) !=0:
-            newDictDetail = {
-                "degreeDetail":item,
-                "isRelevent":True
-                }
-            listout.append(newDictDetail)
-    return(listout)
-
 def createLabelEntry(parent, labelText, input):
     thisFrame = tk.Frame(parent)
     ttk.Label(thisFrame, text=labelText).grid(row=0, column=0)
@@ -75,17 +63,18 @@ def createLabelTextField(parent, labelText, input):
     ttk.Label(thisFrame, text=labelText, wraplength=125).grid(column=0,row=0)
     input = tk.Text(thisFrame, width=50, height=6)
     input.grid(column=0, row=1)
-    return thisFrame
+    return thisFrame, input
 
 def createSpinMonthYear(parent, labelText, input1, input2, yearsList):
     thisFrame = tk.Frame(parent)
-    ttk.Label(thisFrame, labelText).grid(column=0,row=0)
-    newComboBox = ttk.Combobox(parent, width = 5,
+    newLabel = ttk.Label(thisFrame, text=labelText)
+    newLabel.grid(column=0,row=0)
+    newComboBox = ttk.Combobox(thisFrame, width = 5,
                                textvariable = input1 ,
                                values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     newComboBox.grid(column=1,row=0)
-    ttk.Label(parent, text=" - ").grid(column=2,row=0)
-    newComboBox = ttk.Combobox(parent, width = 5,
+    ttk.Label(thisFrame, text=" - ").grid(column=2,row=0)
+    newComboBox = ttk.Combobox(thisFrame, width = 5,
                                textvariable = input2,
                                values = yearsList)
     newComboBox.grid(column=3,row=0)
@@ -110,6 +99,19 @@ def createSpinState(parent, labelText, input):
     input.set("State")
     newComboBox.grid(column=1, row=0)
     return thisFrame
+
+def makeDegreeDetailList(degreeDetails):
+    tempString = degreeDetails.get("1.0", 'end-1c')
+    listout = []
+    listTempIn = tempString.split('\n')
+    for item in listTempIn:
+        if len(item) !=0:
+            newDictDetail = {
+                "degreeDetail":item,
+                "isRelevent":True
+                }
+            listout.append(newDictDetail)
+    return(listout)
 
 def mainApp():
     root = tk.Tk()
@@ -157,7 +159,7 @@ def mainApp():
     SchoolDateEndMonth = tk.IntVar()
     SchoolDateEndYear = tk.IntVar()
     GPA = tk.StringVar()
-    degreeDetails = tk.StringVar()
+    degreeDetails = tk.Text()
     # ... Declare other StringVar or IntVar variables ...
 
     yearsList = [year for year in range(1950, 2050)]
@@ -184,23 +186,23 @@ def mainApp():
     newEntryField = createLabelEntry(tab2, "Enter your Minor: ", degreeSubField)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your Minor: ", schoolName)
+    newEntryField = createLabelEntry(tab2, "Enter the name of the school you got it at: ", schoolName)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your Minor: ", schoolCity)
+    newEntryField = createLabelEntry(tab2, "Enter that school's city: ", schoolCity)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your Minor: ", schoolState)
+    newEntryField = createLabelEntry(tab2, "Enter that school's state: ", schoolState)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your Minor: ", GPA)
+    newEntryField = createLabelEntry(tab2, "Enter your overall GPA: ", GPA)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
     newEntryField = createSpinMonthYear(tab2, "Grad date(month - year): ", 
                                         SchoolDateEndMonth, SchoolDateEndYear, yearsList)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelTextField(tab2, "Some details about your time getting this degree:", degreeDetails)
+    newEntryField, degreeDetails = createLabelTextField(tab2, "Some details about your time getting this degree:", degreeDetails)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
     
@@ -216,7 +218,7 @@ def mainApp():
                                                             SchoolDateEndMonth.get(), 
                                                             SchoolDateEndYear.get(), 
                                                             GPA.get(), 
-                                                            makeDegreeDetailList(degreeDetails.get("1.0", 'end-1c')))) # Add other .get() calls
+                                                            makeDegreeDetailList(degreeDetails))) # Add other .get() calls
     btnSchoolSubmit.grid(column=curCol, row=curRow)
 
     # ... Other GUI elements ...
