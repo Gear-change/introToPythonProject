@@ -23,7 +23,6 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity
         "dateEndMonth": SchoolDateEndMonth
     }
     userEducation.append(newEducation)
-    print(newEducation)
 
 def makePersonalInformationtab(tab1, firstName, middleInitial, lastName, userLinkedin, 
                                userGithub, userPhone, userEmail):
@@ -225,9 +224,8 @@ def mainApp():
     # ... Add other personal information entries ...
     
     # Education Tab
-    
-    makeEducationTabFrame(tab2)
 
+    makeEducationTabFrame(tab2)
    
     # ... Other GUI elements ...
 
