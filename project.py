@@ -113,6 +113,81 @@ def makeDegreeDetailList(degreeDetails):
             listout.append(newDictDetail)
     return(listout)
 
+def makeEducationTabFrame(parent):
+    newFrame = tk.Frame(parent)
+    DegreeType = tk.StringVar()
+    DegreeField = tk.StringVar()
+    degreeSubField = tk.StringVar()
+    schoolName = tk.StringVar()
+    schoolCity = tk.StringVar()
+    schoolState = tk.StringVar()
+    SchoolDateEndMonth = tk.IntVar()
+    SchoolDateEndYear = tk.IntVar()
+    GPA = tk.StringVar()
+    degreeDetails = tk.Text()
+    # ... Declare other StringVar or IntVar variables ...
+
+    yearsList = [year for year in range(1950, 2050)]
+
+    #setting default for auto population
+    DegreeField.set("Field")
+    DegreeType.set("select a Type")
+
+    # ... Populate Education Tab with labels, entries, comboboxes ...
+    curRow = 0
+    curCol = 0
+    newLabel = tk.Label(newFrame, text="Degree type:")
+    newLabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox = ttk.Combobox(newFrame, textvariable = DegreeType,
+                                values = [ ' Highschool',  ' Accociate', ' Bachelor', 
+                                          ' Master', ' Doctorate' ])
+    newComboBox.grid(column=curCol,row=curRow)
+    curCol = 0
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter your degree's field: ", DegreeField)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter your Minor: ", degreeSubField)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter the name of the school you got it at: ", schoolName)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter that school's city: ", schoolCity)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter that school's state: ", schoolState)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createLabelEntry(newFrame, "Enter your overall GPA: ", GPA)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField = createSpinMonthYear(newFrame, "Grad date(month - year): ", 
+                                        SchoolDateEndMonth, SchoolDateEndYear, yearsList)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    newEntryField, degreeDetails = createLabelTextField(newFrame, "Some details about your time getting this degree:", degreeDetails)
+    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curRow += 1
+    
+
+    # Add Degree Button
+    btnSchoolSubmit = tk.Button(newFrame, text="Add Degree", 
+                                command=lambda:addNewDegree(DegreeType.get(), 
+                                                            DegreeField.get(),
+                                                            degreeSubField.get(),
+                                                            schoolName.get(), 
+                                                            schoolCity.get(),  
+                                                            schoolState.get(),  
+                                                            SchoolDateEndMonth.get(), 
+                                                            SchoolDateEndYear.get(), 
+                                                            GPA.get(), 
+                                                            makeDegreeDetailList(degreeDetails))) # Add other .get() calls
+    btnSchoolSubmit.grid(column=curCol, row=curRow)
+    return newFrame
+
+
 def mainApp():
     root = tk.Tk()
     root.title("Resume Generator")
@@ -148,79 +223,12 @@ def mainApp():
                                userGithub, userPhone, userEmail)
 
     # ... Add other personal information entries ...
-
-    # Education Tab
-    DegreeType = tk.StringVar()
-    DegreeField = tk.StringVar()
-    degreeSubField = tk.StringVar()
-    schoolName = tk.StringVar()
-    schoolCity = tk.StringVar()
-    schoolState = tk.StringVar()
-    SchoolDateEndMonth = tk.IntVar()
-    SchoolDateEndYear = tk.IntVar()
-    GPA = tk.StringVar()
-    degreeDetails = tk.Text()
-    # ... Declare other StringVar or IntVar variables ...
-
-    yearsList = [year for year in range(1950, 2050)]
-
-    #setting default for auto population
-    DegreeField.set("Field")
-    DegreeType.set("select a Type")
-
-    # ... Populate Education Tab with labels, entries, comboboxes ...
-    curRow = 0
-    curCol = 0
-    newLabel = tk.Label(tab2, text="Degree type:")
-    newLabel.grid(column=curCol,row=curRow)
-    curCol += 1
-    newComboBox = ttk.Combobox(tab2, textvariable = DegreeType,
-                                values = [ ' Highschool',  ' Accociate', ' Bachelor', 
-                                          ' Master', ' Doctorate' ])
-    newComboBox.grid(column=curCol,row=curRow)
-    curCol = 0
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your degree's field: ", DegreeField)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your Minor: ", degreeSubField)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter the name of the school you got it at: ", schoolName)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter that school's city: ", schoolCity)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter that school's state: ", schoolState)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createLabelEntry(tab2, "Enter your overall GPA: ", GPA)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField = createSpinMonthYear(tab2, "Grad date(month - year): ", 
-                                        SchoolDateEndMonth, SchoolDateEndYear, yearsList)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
-    newEntryField, degreeDetails = createLabelTextField(tab2, "Some details about your time getting this degree:", degreeDetails)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
-    curRow += 1
     
+    # Education Tab
+    
+    makeEducationTabFrame(tab2)
 
-    # Add Degree Button
-    btnSchoolSubmit = tk.Button(tab2, text="Add Degree", 
-                                command=lambda:addNewDegree(DegreeType.get(), 
-                                                            DegreeField.get(),
-                                                            degreeSubField.get(),
-                                                            schoolName.get(), 
-                                                            schoolCity.get(),  
-                                                            schoolState.get(),  
-                                                            SchoolDateEndMonth.get(), 
-                                                            SchoolDateEndYear.get(), 
-                                                            GPA.get(), 
-                                                            makeDegreeDetailList(degreeDetails))) # Add other .get() calls
-    btnSchoolSubmit.grid(column=curCol, row=curRow)
-
+   
     # ... Other GUI elements ...
 
     root.mainloop()
@@ -281,3 +289,4 @@ genericProject = {
 # ... Other generic structures ...
 
 mainApp()
+print(userEducation)
