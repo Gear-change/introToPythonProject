@@ -9,7 +9,7 @@ def degreeToString(degree):
         return " "
 
 def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity, schoolState, 
-                 SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails, ):
+                 SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails):
     newEducation = {
         "degreeType": DegreeType,
         "degreeField": DegreeField,
@@ -20,7 +20,8 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity
         "schoolCity": schoolCity,
         "schoolState": schoolState,
         "dateEndYear": SchoolDateEndYear,
-        "dateEndMonth": SchoolDateEndMonth
+        "dateEndMonth": SchoolDateEndMonth,
+        "isRelevent": True
     }
     userEducation.append(newEducation)
 
@@ -64,26 +65,26 @@ def createLabelTextField(parent, labelText, input):
     input.grid(column=0, row=1)
     return thisFrame, input
 
-def createSpinMonthYear(parent, labelText, input1, input2, yearsList):
+def createSpinMonthYear(parent, labelText, month, year, yearsList):
     thisFrame = tk.Frame(parent)
     newLabel = ttk.Label(thisFrame, text=labelText)
     newLabel.grid(column=0,row=0)
     newComboBox = ttk.Combobox(thisFrame, width = 5,
-                               textvariable = input1 ,
+                               textvariable = month,
                                values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
     newComboBox.grid(column=1,row=0)
     ttk.Label(thisFrame, text=" - ").grid(column=2,row=0)
     newComboBox = ttk.Combobox(thisFrame, width = 5,
-                               textvariable = input2,
+                               textvariable = year,
                                values = yearsList)
     newComboBox.grid(column=3,row=0)
-    input1.set(1)
-    input2.set(1800)
+    month.set(1)
+    year.set(1950)
     return thisFrame
 
 def createSpinState(parent, labelText, input):
     thisFrame = tk.Frame(parent)
-    ttk.Label(thisFrame, labelText).grid(column=0,row=0)
+    ttk.Label(thisFrame, text=labelText).grid(column=0,row=0)
     stateList = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 
                  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 
                  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 
@@ -99,7 +100,7 @@ def createSpinState(parent, labelText, input):
     newComboBox.grid(column=1, row=0)
     return thisFrame
 
-def makeDegreeDetailList(degreeDetails):
+def makeListFromText(degreeDetails):
     tempString = degreeDetails.get("1.0", 'end-1c')
     listout = []
     listTempIn = tempString.split('\n')
@@ -111,6 +112,23 @@ def makeDegreeDetailList(degreeDetails):
                 }
             listout.append(newDictDetail)
     return(listout)
+
+def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
+                  occupationDetailsList, startYear, startMonth, endYear, endMonth):
+    newWork = {
+        "companyName":companyName,
+        "companyCity":companyCity,
+        "companyState":companyState,
+        "occupationTitles":OccupationTitlelist,
+        "occupationDetails":occupationDetailsList,
+        #is relevent should only make them sorted between them for only this one, the other ones don't print if it is not relevent.
+        "isRelevent":True,
+        "dateEndYear":endYear,
+        "dateEndMonth":endMonth,
+        "dateStartYear":startYear,
+        "dateStartMonth":startMonth,
+    }
+    userWork.append(newWork)
 
 def makeEducationTabFrame(parent):
     newFrame = tk.Frame(parent)
@@ -156,7 +174,7 @@ def makeEducationTabFrame(parent):
     newEntryField = createLabelEntry(newFrame, "Enter that school's city: ", schoolCity)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter that school's state: ", schoolState)
+    newEntryField = createSpinState(newFrame, "Enter that school's state: ", schoolState)
     newEntryField.grid(column=curCol,row=curRow, columnspan=2)
     curRow += 1
     newEntryField = createLabelEntry(newFrame, "Enter your overall GPA: ", GPA)
@@ -182,10 +200,69 @@ def makeEducationTabFrame(parent):
                                                             SchoolDateEndMonth.get(), 
                                                             SchoolDateEndYear.get(), 
                                                             GPA.get(), 
-                                                            makeDegreeDetailList(degreeDetails))) # Add other .get() calls
+                                                            makeListFromText(degreeDetails))) # Add other .get() calls
     btnSchoolSubmit.grid(column=curCol, row=curRow)
     return newFrame
 
+def WorkFrame(parent):
+    #first the variables and frames
+    thisFrame = tk.Frame(parent)
+    companyName = tk.StringVar()
+    companyCity = tk.StringVar()
+    companyState = tk.StringVar()
+    occupationTitle = tk.Text()
+    occupationDetailsText = tk.Text()
+    oDateStartYear = tk.IntVar()
+    oDateStartMonth = tk.IntVar()
+    oDateEndYear = tk.IntVar()
+    oDateEndMonth = tk.IntVar()
+
+    #next the years list and other misc variables
+
+    yearsList = [year for year in range(1950, 2050)]
+    curCol = 0
+    curRow = 0
+
+    #next autopopulation values
+    companyName.set("Company")
+    companyCity.set("City")
+
+    # create fields for entering data here
+    newEntryField = createLabelEntry(thisFrame, "Name of company: ", companyName)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField = createLabelEntry(thisFrame, "Company's city: ", companyCity)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField = createSpinState(thisFrame, "Company's state: ", companyState)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField = createSpinMonthYear(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField = createSpinMonthYear(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField, occupationTitle = createLabelTextField(thisFrame, "enter each title you had during your time here:", occupationTitle)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    newEntryField, occupationDetailsText = createLabelTextField(thisFrame, "enter the responsabilities you had at this job: " , occupationDetailsText)
+    newEntryField.grid(column=curCol,row=curRow)
+    curRow += 1
+    btnSubmit = tk.Button(thisFrame, text="Add to Work history", 
+                                command=lambda:addWorkToList(
+                                    companyName.get(),
+                                    companyCity.get(),
+                                    companyState.get(),
+                                    makeListFromText(occupationTitle),
+                                    makeListFromText(occupationDetailsText),
+                                    oDateStartYear.get(),
+                                    oDateStartMonth.get(),
+                                    oDateEndYear.get(),
+                                    oDateEndMonth.get()
+                                )) # Add other .get() calls
+    btnSubmit.grid(column=curCol, row=curRow)
+    return thisFrame
 
 def mainApp():
     root = tk.Tk()
@@ -225,13 +302,20 @@ def mainApp():
     
     # Education Tab
 
-    makeEducationTabFrame(tab2)
-   
+    newFrame = makeEducationTabFrame(tab2)
+    newFrame.grid(column=0,row=0)
+
+    # work tab
+
+    newFrame = WorkFrame(tab3)
+    newFrame.grid(column=0, row=0)
+
     # ... Other GUI elements ...
 
     root.mainloop()
 
 # Global Variables
+userWork = []
 userEducation = []
 genericEducation = {
     "degreeType":"",
@@ -255,8 +339,10 @@ genericWork = {
     "companyName":"",
     "companyCity":"",
     "companyState":"",
-    "companyCity":"",
-    "occupationTitle":"",
+    "occupationTitles":[{
+        "OccupationTitle":"",
+        "isRelevent":True
+    }],
     "occupationDetails":[{
         "OccupationDetail":"",
         "isRelevent":True
@@ -287,4 +373,3 @@ genericProject = {
 # ... Other generic structures ...
 
 mainApp()
-print(userEducation)
