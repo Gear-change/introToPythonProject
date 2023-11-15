@@ -20,7 +20,9 @@ def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist,
     global userWork
     userWork.append(newWork)
 
-def WorkFrame(parent):
+def WorkFrame(parent, listWork):
+    global userWork
+    userWork = listWork
     #first the variables and frames
     thisFrame = tk.Frame(parent)
     companyName = tk.StringVar()

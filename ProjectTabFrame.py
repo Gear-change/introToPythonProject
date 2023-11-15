@@ -15,7 +15,9 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
     global userProjects
     userProjects.append(newProject)
 
-def makeOtherTab(parent):
+def makeOtherTab(parent, listProjects):
+    global userProjects
+    userProjects = listProjects
     # ... Declare other StringVar or IntVar variables ...
     
     newFrame = tk.Frame(parent)

@@ -17,7 +17,9 @@ def addNewSkill(skillName, skillYear):
         userSkills.append(newSkill)
     
 
-def skillFrame(parent):
+def skillFrame(parent, listSkill):
+    global userSkills
+    userSkills = listSkill
     # ... Declare other StringVar or IntVar variables ...
     thisFrame = tk.Frame(parent)
     yearsList = [year for year in range(0, 100)]

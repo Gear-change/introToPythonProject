@@ -27,7 +27,9 @@ def degreeToString(degree):
         print(f"Key error: {e} in degree")
         return " "
 
-def makeEducationTabFrame(parent):
+def makeEducationTabFrame(parent, listEducation):
+    global userEducation
+    userEducation = listEducation
     newFrame = tk.Frame(parent)
     DegreeType = tk.StringVar()
     DegreeField = tk.StringVar()
