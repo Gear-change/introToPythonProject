@@ -6,6 +6,7 @@ from ProjectTabFrame import makeOtherTab
 from personalInfoTab import makePersonalInformationtab
 from workTabFrame import WorkFrame
 from skillTabFrame import skillFrame
+from SettingsTabFrame import makeSettingsTab
 
 def mainApp():
     root = tk.Tk()
@@ -18,6 +19,7 @@ def mainApp():
     tab4 = ttk.Frame(tabControl)
     tab5 = ttk.Frame(tabControl)
     tab6 = ttk.Frame(tabControl)
+
     # ... Create other tabs ...
 
     tabControl.add(tab1, text='Personal Information')
@@ -26,11 +28,13 @@ def mainApp():
     tabControl.add(tab4, text ='Skills')
     tabControl.add(tab5, text ='Other')
     tabControl.add(tab6, text ='Output/print/load')
+
     # ... Add other tabs ...
 
     tabControl.pack(expand=1, fill="both")
 
     # Personal Information Tab
+    
     firstName = tk.StringVar()
     middleInitial = tk.StringVar()
     lastName = tk.StringVar()
@@ -73,6 +77,7 @@ def mainApp():
     root.mainloop()
 
 # Global Variables
+
 userWork = []
 userEducation = []
 userSkills = []
