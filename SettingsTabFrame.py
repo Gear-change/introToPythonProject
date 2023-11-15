@@ -11,8 +11,8 @@ def formatStringOut(List):
     return stringOut
 
 def saveToFile(
-        firstName, middleInitial, lastName, userLinkedin, userGithub, 
-        userPhone, userEmail
+        firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, 
+        userEmail, userWork, userEducation, userSkills, userProjects
         ):
     #first we prepare the values in a string so we can print them
     stringToSave = ""
@@ -23,28 +23,24 @@ def saveToFile(
     stringToAdd = formatStringOut(lstPI)
     stringToSave = stringToSave.join(stringToAdd)
     #PI tab is done
-    global userEducation
     if len(userEducation) < 0:
         for dict in userEducation:
             stringToSave = stringToSave.join(str(dict))
             stringToSave = stringToSave.join("\n")
     stringToSave = stringToSave.join("\n-1\n")
     #education info done
-    global userWork
     if len(userWork) < 0:
         for dict in userWork:
             stringToSave = stringToSave.join(str(dict))
             stringToSave = stringToSave.join("\n")
     stringToSave = stringToSave.join("\n-1\n")
     #work info read
-    global userSkills
     if len(userSkills) < 0:
         for dict in userSkills:
             stringToSave = stringToSave.join(str(dict))
             stringToSave = stringToSave.join("\n")
     stringToSave = stringToSave.join("\n-1\n")
     #skill info read
-    global userProjects
     if len(userProjects) < 0:
         for dict in userProjects:
             stringToSave = stringToSave.join(str(dict))
@@ -53,10 +49,12 @@ def saveToFile(
     files = [('All Files', "*.*"),
              ('Text Document', '*.txt')]
     file = asksaveasfile(filetypes = files, defaultextension = files)
+    file.write(stringToSave)
+    file.close()
 
 def makeSettingsTab(
         parent, firstName, middleInitial, lastName, userLinkedin, 
-        userGithub, userPhone, userEmail
+        userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects
         ):
     newFrame = tk.Frame(parent)
     curCol = 0
@@ -64,7 +62,9 @@ def makeSettingsTab(
     newButton = tk.Button(
         newFrame,
         text="save as",
-        command = lambda:saveToFile(firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail)
+        command = lambda:saveToFile(
+            firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, 
+            userEmail, userWork, userEducation, userSkills, userProjects)
     )
     newButton.grid(column=curCol, row=curRow)
 
