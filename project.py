@@ -24,67 +24,81 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity
         "isRelevent": True
     }
     userEducation.append(newEducation)
+    print(newEducation)
 
 def makePersonalInformationtab(tab1, firstName, middleInitial, lastName, userLinkedin, 
                                userGithub, userPhone, userEmail):
-    currCol = 0
+    curCol = 0
     currRow = 0
-    newEntryFrame = createLabelEntry(tab1, "First name: ", firstName)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "First name: ", firstName)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "Middle Initial: ", middleInitial)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "Middle Initial: ", middleInitial)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "Last name: ", lastName)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "Last name: ", lastName)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "LinkedIn: ", userLinkedin)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "LinkedIn: ", userLinkedin)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "Github: ", userGithub)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "Github: ", userGithub)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "Phone Number: ", userPhone)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "Phone Number: ", userPhone)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0
     currRow += 1
-    newEntryFrame = createLabelEntry(tab1, "Email : ", userEmail)
-    newEntryFrame.grid(column=currCol,row=currRow)
+    newEntry, newlabel = createLabelEntry(tab1, "Email : ", userEmail)
+    newlabel.grid(column=curCol,row=currRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=currRow)
+    curCol = 0 
     currRow += 1
 
 def createLabelEntry(parent, labelText, input):
-    thisFrame = tk.Frame(parent)
-    ttk.Label(thisFrame, text=labelText).grid(row=0, column=0)
-    entry = tk.Entry(thisFrame, textvariable=input )
-    entry.grid(row=0, column=1)
-    return thisFrame
+    thislabel = ttk.Label(parent, text=labelText)
+    entry = tk.Entry(parent, textvariable=input )
+    return entry, thislabel
 
 def createLabelTextField(parent, labelText, input):
-    thisFrame = tk.Frame(parent)
-    ttk.Label(thisFrame, text=labelText, wraplength=125).grid(column=0,row=0)
-    input = tk.Text(thisFrame, width=50, height=6)
-    input.grid(column=0, row=1)
-    return thisFrame, input
+    
+    label = ttk.Label(parent, text=labelText, wraplength=125)
+    input = tk.Text(parent, width=50, height=6)
+    return label, input
 
 def createSpinMonthYear(parent, labelText, month, year, yearsList):
-    thisFrame = tk.Frame(parent)
-    newLabel = ttk.Label(thisFrame, text=labelText)
-    newLabel.grid(column=0,row=0)
-    newComboBox = ttk.Combobox(thisFrame, width = 5,
+    newLabel = ttk.Label(parent, text=labelText)
+    newComboBox = ttk.Combobox(parent, width = 5,
                                textvariable = month,
                                values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-    newComboBox.grid(column=1,row=0)
-    ttk.Label(thisFrame, text=" - ").grid(column=2,row=0)
-    newComboBox = ttk.Combobox(thisFrame, width = 5,
+    newLabel2 = ttk.Label(parent, text=" - ")
+    newComboBox1 = ttk.Combobox(parent, width = 5,
                                textvariable = year,
                                values = yearsList)
-    newComboBox.grid(column=3,row=0)
     month.set(1)
     year.set(1950)
-    return thisFrame
+    return newLabel, newComboBox, newLabel2, newComboBox1
 
 def createSpinState(parent, labelText, input):
-    thisFrame = tk.Frame(parent)
-    ttk.Label(thisFrame, text=labelText).grid(column=0,row=0)
+    newLabel = ttk.Label(parent, text=labelText)
     stateList = [ 'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 
                  'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 
                  'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 
@@ -95,10 +109,9 @@ def createSpinState(parent, labelText, input):
                  'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 
                  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',
                  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-    newComboBox = ttk.Combobox(thisFrame, textvariable=input, values=stateList)
+    newComboBox = ttk.Combobox(parent, textvariable=input, values=stateList)
     input.set("State")
-    newComboBox.grid(column=1, row=0)
-    return thisFrame
+    return newLabel, newComboBox
 
 def makeListFromText(degreeDetails):
     tempString = degreeDetails.get("1.0", 'end-1c')
@@ -162,33 +175,57 @@ def makeEducationTabFrame(parent):
     newComboBox.grid(column=curCol,row=curRow)
     curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter your degree's field: ", DegreeField)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newEntry, newlabel =  createLabelEntry(newFrame, "Enter your degree's field: ", DegreeField)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter your Minor: ", degreeSubField)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newEntry, newlabel = createLabelEntry(newFrame, "Enter your Minor: ", degreeSubField)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter the name of the school you got it at: ", schoolName)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newEntry, newlabel = createLabelEntry(newFrame, "Enter the name of the school you got it at: ", schoolName)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter that school's city: ", schoolCity)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newEntry, newlabel = createLabelEntry(newFrame, "Enter that school's city: ", schoolCity)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createSpinState(newFrame, "Enter that school's state: ", schoolState)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newLabel, newComboBox = createSpinState(newFrame, "Enter that school's state: ", schoolState)
+    newLabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(newFrame, "Enter your overall GPA: ", GPA)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newEntry, newlabel = createLabelEntry(newFrame, "Enter your overall GPA: ", GPA)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createSpinMonthYear(newFrame, "Grad date(month - year): ", 
-                                        SchoolDateEndMonth, SchoolDateEndYear, yearsList)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    newLabel1, newComboBox, newLabel2, newComboBox1 = createSpinMonthYear(newFrame, "Grad date(month - year): ", SchoolDateEndMonth,     SchoolDateEndYear, yearsList)
+    newLabel1.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox.grid(column=curCol,row=curRow)
+    curCol += 1
+    newLabel2.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox1.grid(column=curCol,row=curRow)
     curRow += 1
-    newEntryField, degreeDetails = createLabelTextField(newFrame, "Some details about your time getting this degree:", degreeDetails)
-    newEntryField.grid(column=curCol,row=curRow, columnspan=2)
+    curCol = 0
+    newLabel, degreeDetails = createLabelTextField(newFrame, "Some details about your time getting this degree:", degreeDetails)
+    newLabel.grid(column=curCol,row=curRow)
+    curCol+=1
+    degreeDetails.grid(column=curCol,row=curRow, columnspan=3)
     curRow += 1
-    
-
     # Add Degree Button
     btnSchoolSubmit = tk.Button(newFrame, text="Add Degree", 
                                 command=lambda:addNewDegree(DegreeType.get(), 
@@ -228,26 +265,55 @@ def WorkFrame(parent):
     companyCity.set("City")
 
     # create fields for entering data here
-    newEntryField = createLabelEntry(thisFrame, "Name of company: ", companyName)
-    newEntryField.grid(column=curCol,row=curRow)
+    newEntry, newlabel = createLabelEntry(thisFrame, "Name of company: ", companyName)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createLabelEntry(thisFrame, "Company's city: ", companyCity)
-    newEntryField.grid(column=curCol,row=curRow)
+    newEntry, newlabel = createLabelEntry(thisFrame, "Company's city: ", companyCity)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newEntry.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createSpinState(thisFrame, "Company's state: ", companyState)
-    newEntryField.grid(column=curCol,row=curRow)
+    newLabel, newComboBox = createSpinState(thisFrame, "Company's state: ", companyState)
+    newLabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField = createSpinMonthYear(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
-    newEntryField.grid(column=curCol,row=curRow)
+    newLabel, newComboBox, newLabel2, newComboBox1 = createSpinMonthYear(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox.grid(column=curCol,row=curRow)
+    curCol += 1
+    newLabel2.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox1.grid(column=curCol,row=curRow)
+    curCol = 0
     curRow += 1
-    newEntryField = createSpinMonthYear(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
-    newEntryField.grid(column=curCol,row=curRow)
+    newLabel, newComboBox, newLabel2, newComboBox1 = createSpinMonthYear(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
+    newlabel.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox.grid(column=curCol,row=curRow)
+    curCol += 1
+    newLabel2.grid(column=curCol,row=curRow)
+    curCol += 1
+    newComboBox1.grid(column=curCol,row=curRow)
+    curCol = 0
     curRow += 1
-    newEntryField, occupationTitle = createLabelTextField(thisFrame, "enter each title you had during your time here:", occupationTitle)
-    newEntryField.grid(column=curCol,row=curRow)
+    newLabel, occupationTitle = createLabelTextField(thisFrame, "enter each title you had during your time here:", occupationTitle)
+    newLabel.grid(column=curCol,row=curRow)
+    curCol+=1
+    occupationTitle.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
-    newEntryField, occupationDetailsText = createLabelTextField(thisFrame, "enter the responsabilities you had at this job: " , occupationDetailsText)
-    newEntryField.grid(column=curCol,row=curRow)
+    newLabel, occupationDetailsText = createLabelTextField(thisFrame, "enter the responsabilities you had at this job: " , occupationDetailsText)
+    newLabel.grid(column=curCol,row=curRow)
+    curCol+=1
+    occupationDetailsText.grid(column=curCol,row=curRow, columnspan=3)
+    curCol = 0
     curRow += 1
     btnSubmit = tk.Button(thisFrame, text="Add to Work history", 
                                 command=lambda:addWorkToList(
