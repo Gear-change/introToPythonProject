@@ -1,4 +1,4 @@
-from CommonTools import *
+from commontools2 import *
 import tkinter as tk
 from tkinter import ttk
 
@@ -47,7 +47,7 @@ def makeOtherTab(parent, listProjects):
         )
     newLabel.grid(column=currCol,row=currRow,columnspan=2)
     currRow += 1
-    newEntry, newLabel = createLabelEntry(
+    newEntry, newLabel = create_label_entry(
         newFrame, 
         "Enter The name of this thing: ", 
         projectName
@@ -57,17 +57,17 @@ def makeOtherTab(parent, listProjects):
     newEntry.grid(column=currCol,row=currRow)
     currCol = 0
     currRow += 1
-    newCheckBox = createCheckBoxLabel(newFrame, "This is a Compatition.", hasEvent)
+    newCheckBox = create_check_box_label(newFrame, "This is a Compatition.", hasEvent)
     newCheckBox.grid(column=currCol,row=currRow, columnspan=2)
     currRow += 1
-    newEntry, newLabel = createLabelEntry(newFrame, 
+    newEntry, newLabel = create_label_entry(newFrame, 
                                           "Enter the event's name: ", eventName)
     newLabel.grid(column=currCol,row=currRow)
     currCol += 1
     newEntry.grid(column=currCol,row=currRow)
     currCol = 0
     currRow += 1
-    newLabel, newComboBox, newLabel2, newComboBox2 = createSpinMonthYear(
+    newLabel, newComboBox, newLabel2, newComboBox2 = create_spin_month_year(
         newFrame, 
         "Enter the month the thing took place:", 
         monthEvent, yearEvent, yearsList
@@ -85,10 +85,9 @@ def makeOtherTab(parent, listProjects):
     newComboBox2.grid(column=currCol,row=currRow)
     currCol = 0
     currRow += 1
-    newLabel, projectDetailsText = createLabelTextField(
+    newLabel, projectDetailsText = create_label_text_field(
         newFrame, 
-        "enter the details of this event: ", 
-        projectDetailsText)
+        "enter the details of this event: ")
     newLabel.grid(column=currCol,row=currRow)
     currCol += 1
     projectDetailsText.grid(column=currCol,row=currRow)
@@ -101,7 +100,7 @@ def makeOtherTab(parent, listProjects):
                                     eventName.get(),
                                     monthEvent.get(),
                                     yearEvent.get(),
-                                    makeListFromText(
+                                    make_list_from_text(
                                         projectDetailsText, 
                                         "projectDetail"
                                         )

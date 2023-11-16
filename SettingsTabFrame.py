@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from CommonTools import *
 from tkinter.filedialog import asksaveasfile
 
 def formatStringOut(List):

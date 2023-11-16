@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from CommonTools import createLabelEntry, createComboSet
+from commontools2 import create_label_entry, create_combo_set
 
 def addNewSkill(skillName, skillYear):
     newSkill = {
@@ -34,14 +34,14 @@ def skillFrame(parent, listSkill):
     # ... Populateing skills Tab with labels, entries, comboboxes ...
     curRow = 0
     curCol = 0
-    newEntry, newLabel = createLabelEntry(thisFrame, "Enter the name of the skill: ", 
+    newEntry, newLabel = create_label_entry(thisFrame, "Enter the name of the skill: ", 
                                           skillName)
     newLabel.grid(column=curCol, row=curRow)
     curCol += 1
     newEntry.grid(column=curCol, row=curRow)
     curCol =0
     curRow += 1
-    newCombo, newLabel = createComboSet(thisFrame,"enter how many years you have been using this skill: ", skillYear, yearsList)
+    newCombo, newLabel = create_combo_set(thisFrame,"enter how many years you have been using this skill: ", skillYear, yearsList)
     newLabel.grid(column=curCol, row=curRow)
     curCol += 1
     newCombo.grid(column=curCol, row=curRow)

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from CommonTools import createLabelEntry, createComboSet, createSpinMonthYear, createLabelTextField, makeListFromText
+from commontools2 import create_label_entry, create_combo_set, create_spin_month_year, create_label_text_field, make_list_from_text
 
 def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
                   occupationDetailsList, startYear, startMonth, endYear, endMonth):
@@ -56,25 +56,25 @@ def WorkFrame(parent, listWork):
     companyCity.set("City")
 
     # create fields for entering data here
-    newEntry, newlabel = createLabelEntry(thisFrame, "Name of company: ", companyName)
+    newEntry, newlabel = create_label_entry(thisFrame, "Name of company: ", companyName)
     newlabel.grid(column=curCol,row=curRow)
     curCol += 1
     newEntry.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newEntry, newLabel = createLabelEntry(thisFrame, "Company's city: ", companyCity)
+    newEntry, newLabel = create_label_entry(thisFrame, "Company's city: ", companyCity)
     newLabel.grid(column=curCol,row=curRow)
     curCol += 1
     newEntry.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newComboBox, newLabel = createComboSet(thisFrame, "Company's state: ", companyState, stateList)
+    newComboBox, newLabel = create_combo_set(thisFrame, "Company's state: ", companyState, stateList)
     newLabel.grid(column=curCol,row=curRow)
     curCol += 1
     newComboBox.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newLabel, newComboBox, newLabel2, newComboBox1 = createSpinMonthYear(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
+    newLabel, newComboBox, newLabel2, newComboBox1 = create_spin_month_year(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
     newlabel.grid(column=curCol,row=curRow)
     curCol += 1
     newComboBox.grid(column=curCol,row=curRow)
@@ -84,7 +84,7 @@ def WorkFrame(parent, listWork):
     newComboBox1.grid(column=curCol,row=curRow)
     curCol = 0
     curRow += 1
-    newLabel, newComboBox, newLabel2, newComboBox1 = createSpinMonthYear(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
+    newLabel, newComboBox, newLabel2, newComboBox1 = create_spin_month_year(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
     newlabel.grid(column=curCol,row=curRow)
     curCol += 1
     newComboBox.grid(column=curCol,row=curRow)
@@ -94,13 +94,13 @@ def WorkFrame(parent, listWork):
     newComboBox1.grid(column=curCol,row=curRow)
     curCol = 0
     curRow += 1
-    newLabel, occupationTitle = createLabelTextField(thisFrame, "enter each title you had during your time here:", occupationTitle)
+    newLabel, occupationTitle = create_label_text_field(thisFrame, "enter each title you had during your time here:")
     newLabel.grid(column=curCol,row=curRow)
     curCol+=1
     occupationTitle.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newLabel, occupationDetailsText = createLabelTextField(thisFrame, "enter the responsabilities you had at this job: " , occupationDetailsText)
+    newLabel, occupationDetailsText = create_label_text_field(thisFrame, "enter the responsabilities you had at this job: ")
     newLabel.grid(column=curCol,row=curRow)
     curCol+=1
     occupationDetailsText.grid(column=curCol,row=curRow, columnspan=3)
@@ -111,8 +111,8 @@ def WorkFrame(parent, listWork):
                                     companyName.get(),
                                     companyCity.get(),
                                     companyState.get(),
-                                    makeListFromText(occupationTitle, "OccupationTitle"),
-                                    makeListFromText(occupationDetailsText, "OccupationDetail"),
+                                    make_list_from_text(occupationTitle, "OccupationTitle"),
+                                    make_list_from_text(occupationDetailsText, "OccupationDetail"),
                                     oDateStartYear.get(),
                                     oDateStartMonth.get(),
                                     oDateEndYear.get(),
