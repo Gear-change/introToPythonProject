@@ -6,7 +6,7 @@ from ProjectTabFrame import makeOtherTab
 from personalInfoTab import makePersonalInformationtab
 from workTabFrame import WorkFrame
 from skillTabFrame import skillFrame
-from SettingsTabFrame import makeSettingsTab
+from settings_tab_frame import make_settings_tab
 
 def mainApp():
     root = tk.Tk()
@@ -70,7 +70,7 @@ def mainApp():
     newFrame.grid(column=0, row=0)
 
     # ... Now the fun begins.
-    newFrame = makeSettingsTab(
+    newFrame = make_settings_tab(
         tab6, firstName, middleInitial, lastName, userLinkedin, userGithub, 
         userPhone, userEmail, userWork, userEducation, userSkills, userProjects
     )

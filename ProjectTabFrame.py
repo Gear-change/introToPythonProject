@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from commontools2 import *
 import tkinter as tk
 from tkinter import ttk
@@ -13,7 +14,12 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
         "projectDetails":projectDetailsList,
     }
     global userProjects
-    userProjects.append(newProject)
+    if newProject in userProjects:
+        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
+        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
+        newAlert.show()
+    else:
+        userProjects.append(newProject)
 
 def makeOtherTab(parent, listProjects):
     global userProjects
@@ -93,7 +99,7 @@ def makeOtherTab(parent, listProjects):
     projectDetailsText.grid(column=currCol,row=currRow)
     currRow += 1
     # Add Degree Button
-    newButton = tk.Button(newFrame, text="Add Degree", 
+    newButton = tk.Button(newFrame, text="add Thing", 
                                 command=lambda:addNewProject(
                                     projectName.get(),
                                     hasEvent.get(),
@@ -105,5 +111,6 @@ def makeOtherTab(parent, listProjects):
                                         "projectDetail"
                                         )
                                     ))
+    newButton.grid(column=currCol,row=currRow)
     #return frame
     return newFrame

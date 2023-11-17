@@ -11,6 +11,7 @@ def addNewSkill(skillName, skillYear):
     }
     global userSkills
     if newSkill in userSkills:
+        #an alert should popup if this skill already exists, asking if it should be overwritten or to cancel adding
         newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
         newAlert.show()
     else:
@@ -47,7 +48,7 @@ def skillFrame(parent, listSkill):
     newCombo.grid(column=curCol, row=curRow)
     curRow += 1
     # Add Skill Button
-    btnSchoolSubmit = tk.Button(thisFrame, text="Add Degree", 
+    btnSchoolSubmit = tk.Button(thisFrame, text="addskill", 
                                 command=lambda:addNewSkill(skillName.get(), 
                                                             skillYear.get(),)) # Add other .get() calls
     btnSchoolSubmit.grid(column=curCol, row=curRow)

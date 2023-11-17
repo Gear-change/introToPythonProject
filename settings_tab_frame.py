@@ -28,6 +28,20 @@ def save_to_file(*args):
 
 def make_settings_tab(parent, *args):
     new_frame = tk.Frame(parent)
+    curcol = 0
+    curRow = 0
+    new_label = tk.Label(new_frame, text="use the button here to save the current inputs to a file: ")
+    new_label.grid(column=curcol,row=curRow)
+    curcol += 1
     save_button = tk.Button(new_frame, text="Save As", command=lambda: save_to_file(*args))
-    save_button.grid(column=0, row=0)
+    save_button.grid(column=curcol,row=curRow)
+    curRow += 1
+    curcol = 0
+    new_label = tk.Label(new_frame, text="use the button here to load prior inputs from a previous file: ")
+    new_label.grid(column=curcol,row=curRow)
+    curcol += 1
+    save_button = tk.Button(new_frame, text="open", command=lambda: load_from_file(*args))
+    save_button.grid(column=curcol,row=curRow)
     return new_frame
+
+

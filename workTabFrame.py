@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from commontools2 import create_label_entry, create_combo_set, create_spin_month_year, create_label_text_field, make_list_from_text
 
 def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
@@ -18,7 +19,12 @@ def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist,
         "dateStartMonth":startMonth,
     }
     global userWork
-    userWork.append(newWork)
+    if newWork in userWork:
+        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
+        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
+        newAlert.show()
+    else:
+        userWork.append(newWork)
 
 def WorkFrame(parent, listWork):
     global userWork
@@ -56,8 +62,8 @@ def WorkFrame(parent, listWork):
     companyCity.set("City")
 
     # create fields for entering data here
-    newEntry, newlabel = create_label_entry(thisFrame, "Name of company: ", companyName)
-    newlabel.grid(column=curCol,row=curRow)
+    newEntry, newLabel = create_label_entry(thisFrame, "Name of company: ", companyName)
+    newLabel.grid(column=curCol,row=curRow)
     curCol += 1
     newEntry.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
@@ -75,7 +81,7 @@ def WorkFrame(parent, listWork):
     curCol = 0
     curRow += 1
     newLabel, newComboBox, newLabel2, newComboBox1 = create_spin_month_year(thisFrame, "When where you hired(month-year): ", oDateStartMonth, oDateStartYear, yearsList)
-    newlabel.grid(column=curCol,row=curRow)
+    newLabel.grid(column=curCol,row=curRow)
     curCol += 1
     newComboBox.grid(column=curCol,row=curRow)
     curCol += 1
@@ -85,7 +91,7 @@ def WorkFrame(parent, listWork):
     curCol = 0
     curRow += 1
     newLabel, newComboBox, newLabel2, newComboBox1 = create_spin_month_year(thisFrame, "When where you fired(month-year): ", oDateEndMonth, oDateEndYear, yearsList)
-    newlabel.grid(column=curCol,row=curRow)
+    newLabel.grid(column=curCol,row=curRow)
     curCol += 1
     newComboBox.grid(column=curCol,row=curRow)
     curCol += 1
