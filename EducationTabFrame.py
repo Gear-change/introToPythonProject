@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from commontools2 import create_combo_set, create_label_entry, create_spin_month_year,create_label_text_field, make_list_from_text
 
 def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity, schoolState, 
@@ -18,7 +19,12 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity
         "isRelevent": True
     }
     global userEducation
-    userEducation.append(newEducation)
+    if newEducation in userEducation:
+        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
+        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
+        newAlert.show()
+    else:
+        userEducation.append(newEducation)
 
 def degreeToString(degree):
     try:

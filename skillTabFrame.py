@@ -10,10 +10,21 @@ def addNewSkill(skillName, skillYear):
         "isRelevent":True,
     }
     global userSkills
-    if newSkill in userSkills:
+    indexOfCopy = 0
+    boolSkillIsSame= False
+    for skill in userSkills:
+        boolSkillIsSame = skill.get('skillName') == skillName
+        if boolSkillIsSame:
+            break
+        else:
+            indexOfCopy += 1
+    if boolSkillIsSame:
         #an alert should popup if this skill already exists, asking if it should be overwritten or to cancel adding
-        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
-        newAlert.show()
+        overwriteSkill = messagebox.askyesno(title="duplicate skill detected", message="this skill is in there, do you wish to overwrite it?")
+        if overwriteSkill:
+            #this is if true, then we need to remove that skill and overwrite it
+            userSkills.pop(indexOfCopy)
+            userSkills.append(newSkill)
     else:
         userSkills.append(newSkill)
     

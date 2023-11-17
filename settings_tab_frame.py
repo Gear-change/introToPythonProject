@@ -26,6 +26,7 @@ def save_to_file(*args):
         if file:
             file.write(string_to_save)
 
+
 def make_settings_tab(parent, *args):
     new_frame = tk.Frame(parent)
     curcol = 0
