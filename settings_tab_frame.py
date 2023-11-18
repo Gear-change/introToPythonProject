@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter.filedialog import asksaveasfile, askopenfile
 from tkinter import messagebox
 
+from relevencyFrame import openRelevencyFrame
+
 
 def load_from_file(*args):
     firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
