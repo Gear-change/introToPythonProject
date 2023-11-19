@@ -118,7 +118,7 @@ def make_settings_tab(parent, *args):
     new_label = tk.Label(new_frame, text=" use this Button to proceed toward printing a resume: ")
     new_label.grid(column=curcol,row=curRow)
     curcol += 1
-    to_relevency_button = tk.Button(new_frame, text="to relevancy input", command=openRelevencyFrame(*args))
+    to_relevency_button = tk.Button(new_frame, text="to relevancy input", command=lambda:openRelevencyFrame(*args))
     to_relevency_button.grid(column=curcol,row=curRow)
     return new_frame
 

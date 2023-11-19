@@ -113,7 +113,8 @@ genericWork = {
     "companyState":"",
     "occupationTitles":[{
         "OccupationTitle":"",
-        "isRelevent":True
+        "isRelevent":True,
+        "titleNo":0
     }],
     "occupationDetails":[{
         "OccupationDetail":"",
@@ -128,7 +129,7 @@ genericWork = {
 }
 genericSkill = {
     "skillName":"",
-    "skillYears":"",
+    "skillYears":0,
     "isRelevent":True,
 }
 genericProject = {

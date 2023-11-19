@@ -3,6 +3,18 @@ from tkinter import ttk
 from tkinter import messagebox
 from commontools2 import create_label_entry, create_combo_set, create_spin_month_year, create_label_text_field, make_list_from_text
 
+def make_list_from_text_2(text_box_in, string_detail_name):
+    newList = list()
+    intTempNo = 0
+    for item in text_box_in.get("1.0", 'end-1c').split('\n'):
+        newList.append({
+            "isRelevent":True,
+            string_detail_name:item,
+            "titleNo": intTempNo
+        })
+        intTempNo += 0
+    return newList
+
 def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
                   occupationDetailsList, startYear, startMonth, endYear, endMonth):
     newWork = {
@@ -117,7 +129,7 @@ def WorkFrame(parent, listWork):
                                     companyName.get(),
                                     companyCity.get(),
                                     companyState.get(),
-                                    make_list_from_text(occupationTitle, "OccupationTitle"),
+                                    make_list_from_text_2(occupationTitle, "OccupationTitle"),
                                     make_list_from_text(occupationDetailsText, "OccupationDetail"),
                                     oDateStartYear.get(),
                                     oDateStartMonth.get(),
