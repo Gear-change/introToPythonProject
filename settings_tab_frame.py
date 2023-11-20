@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import asksaveasfile, askopenfile
 from tkinter import messagebox
+import json
 
 from relevencyFrame import openRelevencyFrame
 
@@ -12,90 +13,46 @@ def load_from_file(*args):
     if readFile is not None:
         #this if clause is in case there is no info in the file selected or no file there
         #first lets clear the existing files
-        userWork = []
-        userEducation = []
-        userSkills = []
-        userProjects = []
         listStringFromFile = []
         for x in readFile:
             listStringFromFile.append(x)
         readFile.close()
-        firstName.set(listStringFromFile[0])
-        middleInitial.set(listStringFromFile[2])
-        lastName.set(listStringFromFile[4])
-        userLinkedin.set(listStringFromFile[6])
-        userGithub.set(listStringFromFile[8])
-        userPhone.set(listStringFromFile[10])
-        userEmail.set(listStringFromFile[12])
-        #from this point onward we need to adjust to what is in the file
-        lineNo = 14
-        newinput = listStringFromFile[lineNo]
-        keysofInput = newinput.keys()
-        if 'degreeType' in keysofInput:
-            #we know we have a education list now as an input
-            newDegree = newinput
-            while newDegree != -1:
-                userEducation.append(newDegree)
-                lineNo += 1
-                newDegree = listStringFromFile[lineNo]
-            lineNo += 1
-            newinput = listStringFromFile(lineNo)
-        if 'companyName' in keysofInput:
-            #now we know we have a work list as an input
-            newWork = newinput
-            while newWork != -1:
-                userWork.append(newWork)
-                lineno += 1
-                newWork = listStringFromFile[lineNo]
-            lineNo += 1
-            newinput = listStringFromFile(lineNo)
-        if 'skillName' in keysofInput:
-            #now we know we have a skill list as an input
-            newSkill = newinput
-            while newSkill != -1:
-                userSkills.append(newSkill)
-                lineNo += 1
-                newSkill = listStringFromFile[lineNo]
-            lineNo += 1
-            newinput = listStringFromFile[lineNo]
-        if 'projectName' in keysofInput:
-            #now we know we have a project/other list as input
-            newProject = newinput
-            while newProject != -1:
-                userProjects.append(newProject)
-                lineNo += 1
-                newSkill = listStringFromFile[lineNo]
-        #we should be done now            
+        tempInt = 0
+        listArgs =[]
+        for x in listStringFromFile:
+            listArgs.append(json.loads(x))
+        listPIIN = listArgs[0]
+        listPIset =[firstName ,middleInitial ,lastName ,userLinkedin ,userGithub ,userPhone ,userEmail ]
+        for x in range(0,7):
+            listPIset[x].set(listPIIN[x])
+        userwork = listArgs[1]
+        userEducation = listArgs[2]
+        userskills = listArgs[3]
+        userProjects = listArgs[4]
+        
+                 
     else:
         messagebox.showerror(title="there is nothing here", message="try a different file?")
-    
-
-def format_string_out(items):
-    return '\n-1\n'.join(items)
 
 def save_to_file(*args):
-    
     firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
-
-  
-    personal_info = [firstName.get(), middleInitial.get(), lastName.get(), 
-                     userLinkedin.get(), userGithub.get(), userPhone.get(),
-                     userEmail.get()]
-    string_to_save = format_string_out(personal_info)
-
-   
-    for user_data in [userEducation, userWork, userSkills, userProjects]:
-        if len(user_data) > 0:
-            user_data_str = '\n'.join([str(d) for d in user_data])
-            string_to_save += '\n-1\n' + user_data_str
-
+    PIList = [firstName.get(),middleInitial.get(),lastName.get(),userLinkedin.get(),userGithub.get(),userPhone.get(),userEmail.get()]
+    listArgs = []
+    listArgs.append(PIList)
+    listArgs.append(userWork)
+    listArgs.append(userEducation)
+    listArgs.append(userSkills)
+    listArgs.append(userProjects)
+    stringVarOut = ""
+    for item in listArgs:
+        tempString = stringVarOut + json.dumps(item) + "\n"
+        stringVarOut = tempString
     
+    string_to_save = stringVarOut
+    print
     with asksaveasfile(filetypes=[('Text Document', '*.txt'), ('All Files', "*.*")], defaultextension='.txt') as file:
         if file:
             file.write(string_to_save)
-    file.write("\n-1")
-    file.close()
-
 
 def make_settings_tab(parent, *args):
     new_frame = tk.Frame(parent)

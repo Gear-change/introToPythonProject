@@ -155,16 +155,21 @@ def openRelevencyFrame(*args):
         newCheckButton.grid(column=curCol,row=curRow)
         curRow += 1
     curRow+=1
+    ttk.Label(rFrame, text="Describe yourself to said employer:")
+    userDesc = tk.StringVar()
+    newEntry = tk.Entry(rFrame, textvariable=userDesc)
+    newEntry.grid(column=curCol, row=curRow)
     newButton = tk.Button(
         rFrame,
         text="Make resume",
-        command=lambda:setRelevenceyFinal(dictTitlesRelevince, *args)
+        command=lambda:setRelevenceyFinal(dictTitlesRelevince, userDesc, *args)
     )
+    newButton.grid(column=curCol, row=curRow)
     newList = dictTitlesRelevince.values()
     print(newList)
 def setRelevenceyFinal(dictTitlesRelevince, *args):
     #spool out the variables
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
     #we need to set the titles that are and are not relevent,
     for [work, value] in [userWork, dictTitlesRelevince.values()]:
         for title in work["occupationTitles"]:

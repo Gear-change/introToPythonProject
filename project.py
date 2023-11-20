@@ -5,7 +5,7 @@ from EducationTabFrame import makeEducationTabFrame
 from ProjectTabFrame import makeOtherTab
 from personalInfoTab import makePersonalInformationtab
 from workTabFrame import WorkFrame
-from skillTabFrame import skillFrame
+from skilltabframe2 import skillFrame
 from settings_tab_frame import make_settings_tab
 
 def mainApp():
