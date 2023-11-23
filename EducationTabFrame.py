@@ -9,7 +9,7 @@ def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, s
         "degreeType": DegreeType,
         "degreeField": DegreeField,
         "degreeMinor": degreeMinor,
-        "SchoolName": schoolName,
+        "schoolName": schoolName,
         "degreeDetails": degreeDetails,
         "gradeGPA": GPA,
         "schoolCity": schoolCity,
