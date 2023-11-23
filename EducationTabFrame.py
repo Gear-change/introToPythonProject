@@ -3,12 +3,12 @@ from tkinter import ttk
 from tkinter import messagebox
 from commontools2 import create_combo_set, create_label_entry, create_spin_month_year,create_label_text_field, make_list_from_text
 
-def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity, schoolState, 
+def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, schoolState, 
                  SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails):
     newEducation = {
         "degreeType": DegreeType,
         "degreeField": DegreeField,
-        "degreeMinor": degreeSubField,
+        "degreeMinor": degreeMinor,
         "SchoolName": schoolName,
         "degreeDetails": degreeDetails,
         "gradeGPA": GPA,
@@ -28,9 +28,9 @@ def addNewDegree(DegreeType, DegreeField, degreeSubField, schoolName, schoolCity
 
 def degreeToString(degree):
     try:
-        return f"{degree['degreeType']} in {degree['degreeField']}: {degree['degreeSubField']}"
+        return f"{degree['degreeType']} in {degree['degreeField']}: {degree['degreeMinor']}"
     except KeyError as e:
-        print(f"Key error: {e} in degree")
+        print(f"Key error: {e} in degree {degree['degreeField']}")
         return " "
 
 def makeEducationTabFrame(parent, listEducation):
@@ -39,7 +39,7 @@ def makeEducationTabFrame(parent, listEducation):
     newFrame = tk.Frame(parent)
     DegreeType = tk.StringVar()
     DegreeField = tk.StringVar()
-    degreeSubField = tk.StringVar()
+    degreeMinor = tk.StringVar()
     schoolName = tk.StringVar()
     schoolCity = tk.StringVar()
     schoolState = tk.StringVar()
@@ -81,7 +81,7 @@ def makeEducationTabFrame(parent, listEducation):
     newEntry.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newEntry, newlabel = create_label_entry(newFrame, "Enter your Minor: ", degreeSubField)
+    newEntry, newlabel = create_label_entry(newFrame, "Enter your Minor: ", degreeMinor)
     newlabel.grid(column=curCol,row=curRow)
     curCol += 1
     newEntry.grid(column=curCol,row=curRow, columnspan=3)
@@ -130,7 +130,7 @@ def makeEducationTabFrame(parent, listEducation):
     btnSchoolSubmit = tk.Button(newFrame, text="Add Degree", 
                                 command=lambda:addNewDegree(DegreeType.get(), 
                                                             DegreeField.get(),
-                                                            degreeSubField.get(),
+                                                            degreeMinor.get(),
                                                             schoolName.get(), 
                                                             schoolCity.get(),  
                                                             schoolState.get(),  

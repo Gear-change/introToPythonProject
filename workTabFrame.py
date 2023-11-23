@@ -12,7 +12,7 @@ def make_list_from_text_2(text_box_in, string_detail_name):
             string_detail_name:item,
             "titleNo": intTempNo
         })
-        intTempNo += 0
+        intTempNo += 1
     return newList
 
 def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
