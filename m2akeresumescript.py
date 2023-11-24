@@ -6,7 +6,7 @@ def format_education(userEducation):
         if edu['isRelevent']:
             education_details =  '\n  •  '.join(detail['degreeDetail'] for detail in edu['degreeDetails'] if detail['isRelevent'])
             education_str += f"{edu['degreeType']} in {edu['degreeField']} \n {edu['schoolName']}, {edu['schoolCity']}, {edu['schoolState']} \n  •  Minor: {edu['degreeMinor']}\n  •  {education_details}\n"
-            education_date_gpa_string += f"{monthToString(edu['dateEndMonth'])}-{str(edu['dateEndYear'])} \n GPA: {edu['gradeGPA']}\n"
+            education_date_gpa_string += f"{monthToString(edu['dateEndMonth'])} {str(edu['dateEndYear'])} \n GPA: {edu['gradeGPA']}\n"
     return education_str, education_date_gpa_string
 
 def format_work_experience_relevent(userWork):
@@ -17,7 +17,7 @@ def format_work_experience_relevent(userWork):
             occupation_titles = '& '.join(title['OccupationTitle'] for title in work['occupationTitles'] if title['isRelevent'])
             occupation_details = '\n  •  '.join(detail['OccupationDetail'] for detail in work['occupationDetails'] if detail['isRelevent'])
             work_str += f"{occupation_titles} \n{work['companyName']}, {work['companyCity']}, {work['companyState']}\n  •  {occupation_details}\n"
-            work_date_str += f"{monthToString(work['dateStartMonth'])}-{str(work['dateStartYear'])} to {monthToString(work['dateEndMonth'])}-{str(work['dateEndYear'])}\n"
+            work_date_str += f"{monthToString(work['dateStartMonth'])} {str(work['dateStartYear'])} - {monthToString(work['dateEndMonth'])} {str(work['dateEndYear'])}\n"
     return work_str, work_date_str
 def format_work_experience_other(userWork):
     work_str = ""
@@ -27,5 +27,17 @@ def format_work_experience_other(userWork):
             occupation_titles = '& '.join(title['OccupationTitle'] for title in work['occupationTitles'] if title['isRelevent'])
             occupation_details = '\n  •  '.join(detail['OccupationDetail'] for detail in work['occupationDetails'] if detail['isRelevent'])
             work_str += f"{occupation_titles}\t\t{monthToString(work['dateStartMonth'])}-{str(work['dateStartYear'])} to {monthToString(work['dateEndMonth'])}-{str(work['dateEndYear'])} \n{work['companyName']}, {work['companyCity']}, {work['companyState']}\n  •  {occupation_details}\n"
-            work_date_str += f"{monthToString(work['dateStartMonth'])}-{str(work['dateStartYear'])} to {monthToString(work['dateEndMonth'])}-{str(work['dateEndYear'])}\n"
+            work_date_str += f"{monthToString(work['dateStartMonth'])} {str(work['dateStartYear'])} - {monthToString(work['dateEndMonth'])} {str(work['dateEndYear'])}\n"
     return work_str, work_date_str
+def format_Projects(userProject):
+    projects_str = ""
+    project_date_str = ""
+    for project in userProject:
+        if project['isRelevent']:
+            projectDetails =  '\n  •  '.join(detail['projectDetail'] for detail in project['projectDetails'] if detail['isRelevent'])
+            project_date_str+= f"{monthToString(project['month'])} {str(project['year'])}\n"
+            if project['hasEvent']:
+                projects_str += f"{project['projectName']} for {project['eventName']} \n  •  {projectDetails}\n"
+            else:
+                projects_str += f"{project['projectName']}\n  •  {projectDetails}\n"
+    return projects_str, project_date_str

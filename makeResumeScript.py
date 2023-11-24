@@ -58,14 +58,14 @@ def makeResume(*args):
         None, 
         text=userFullName, 
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
         )
     pdf.set_font("Cambria", "", 11)
     pdf.cell(
         None,
         txt=contactLine,
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
     )
     pdf.image(
         "/components/hrBreak.png",
@@ -84,20 +84,20 @@ def makeResume(*args):
     pdf.cell(
         txt="Objective:",
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
     )
     pdf.set_font("Cambria", "", 11)
     pdf.cell(
         txt=userDesc,
         new_x=XPos.LEFT,
-        new_y=YPos.LAST      
+        new_y=YPos.NEXT      
     )
     educationStr, educationDateStr = m2.format_education(userEducation)
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Education",
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
     )
     educationStrList = educationStr.split("\n")
     educationDateStrList = educationDateStr.split("\n")
@@ -115,7 +115,7 @@ def makeResume(*args):
             0,
             educationDateStrList[tempInt2],
             new_x=XPos.LEFT,
-            new_y=YPos.LAST,
+            new_y=YPos.NEXT,
             align=Align.R
         )
         tempInt2 += 1
@@ -130,7 +130,7 @@ def makeResume(*args):
             0,
             educationDateStrList[tempInt2],
             new_x=XPos.LEFT,
-            new_y=YPos.LAST,
+            new_y=YPos.NEXT,
             align=Align.R
         )
         tempInt2 += 1
@@ -140,20 +140,20 @@ def makeResume(*args):
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
-                new_y=YPos.LAST,
+                new_y=YPos.NEXT,
             )
             tempInt1 += 1
             curDetail = educationStrList[tempInt1]
         pdf.cell(
             txt="\t",
             new_x=XPos.LEFT,
-            new_y=YPos.LAST
+            new_y=YPos.NEXT
         )
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Relevent Experience",
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
     )
     workStr, workDateStr = m2.format_work_experience_relevent(userWork)
     listWorkStr = workStr.split("\n")
@@ -171,7 +171,7 @@ def makeResume(*args):
             0,
             txt=workDate,
             new_x=XPos.LEFT,
-            new_y=YPos.LAST,
+            new_y=YPos.NEXT,
             align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
@@ -179,7 +179,7 @@ def makeResume(*args):
             0,
             txt = listWorkStr[tempInt1],
             new_x=XPos.LEFT,
-            new_y=YPos.LAST
+            new_y=YPos.NEXT
         )
         tempInt1 += 1
         curDetail = listWorkStr[tempInt1]
@@ -188,16 +188,61 @@ def makeResume(*args):
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
-                new_y=YPos.LAST,
+                new_y=YPos.NEXT,
             )
             tempInt1 += 1
             curDetail = listWorkStr[tempInt1]
         pdf.cell(
             txt="\t",
             new_x=XPos.LEFT,
-            new_y=YPos.LAST
+            new_y=YPos.NEXT
         )
-    #TODO:create project 
+    projectStrList = []
+    dateProjectStrList = []
+    projectStr, projectDateStr = m2.format_Projects(userProjects)
+    projectStrList = projectStr.split("\n")
+    dateProjectStrList = projectDateStr.split("\n")
+    tempInt1 = 0
+    if dateProjectStrList > 0:
+        pdf.set_font("Cambria", "BU", 11)
+        pdf.cell(
+            0,
+            text="Other Relevent Experiences:",
+            new_x=XPos.LEFT,
+            new_y=YPos.NEXT
+        )
+    for project in dateProjectStrList:
+        pdf.cell(
+            0,
+            text=projectStrList[tempInt1],
+            new_x=XPos.RMARGIN,
+            new_y=YPos.NEXT
+        )
+        tempInt1 += 1
+        pdf.cell(
+            0,
+            text=project,
+            align=Align.R,
+            new_x=XPos.LEFT,
+            new_y=YPos.NEXT
+        )
+        curDetail = projectStrList[tempInt1]
+        while curDetail.index("•")>0:
+            pdf.cell(
+                0,
+                text=curDetail,
+                new_x=XPos.LEFT,
+                new_y=YPos.NEXT
+            )
+            tempInt1+=1
+            curDetail = projectStrList[tempInt1]
+        pdf.cell(
+            0,
+            text="\t",
+            new_x=XPos.LEFT,
+            new_y=YPos.NEXT
+        )
+    #TODO:add skills script 
     skillYearList = [
         [
             "skill1", 
@@ -213,7 +258,7 @@ def makeResume(*args):
             0,
             txt="Skills",
             new_x=XPos.LEFT,
-            new_y=YPos.LAST
+            new_y=YPos.NEXT
         )
         pdf.set_font("Cambria", "", 11)
     for numlist in range(0, len(skillYearList)):
@@ -239,13 +284,15 @@ def makeResume(*args):
             yearstring = ".....Entry Level"
         pdf.cell(
             0,
-            txt=yearString
+            txt=yearString,
+            new_x=XPos.RMARGIN,
+            new_y=YPos.NEXT
         )
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Additional Experience",
         new_x=XPos.LEFT,
-        new_y=YPos.LAST
+        new_y=YPos.NEXT
     )
     workStr, workDateStr = m2.format_work_experience_other(userWork)
     listWorkStr = workStr.split("\n")
@@ -263,7 +310,7 @@ def makeResume(*args):
             0,
             txt=workDate,
             new_x=XPos.LEFT,
-            new_y=YPos.LAST,
+            new_y=YPos.NEXT,
             align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
@@ -271,7 +318,7 @@ def makeResume(*args):
             0,
             txt = listWorkStr[tempInt1],
             new_x=XPos.LEFT,
-            new_y=YPos.LAST
+            new_y=YPos.NEXT
         )
         tempInt1 += 1
         curDetail = listWorkStr[tempInt1]
@@ -280,7 +327,7 @@ def makeResume(*args):
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
-                new_y=YPos.LAST,
+                new_y=YPos.NEXT,
             )
             tempInt1 += 1
             curDetail = listWorkStr[tempInt1]
