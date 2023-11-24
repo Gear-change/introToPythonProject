@@ -1,5 +1,6 @@
-from fpdf import FPDF
+from fpdf2.fpdf import FPDF, YPos, XPos, Align
 import m2akeresumescript as m2
+
 
 def makeResume(*args):
     #TODO: MAKE THE RESUME PRINT FUNCTION
@@ -46,7 +47,7 @@ def makeResume(*args):
     marginX = 45.36
     marginYTop = 31.68
     marginYBottom = 13.68
-    widthMax = 622 - marginX * 2
+
     pdf = FPDF(orientation="portrait", unit="pt",format="letter")
     pdf.add_page()
     pdf.set_margins(marginX, marginYTop, marginX)
@@ -56,15 +57,15 @@ def makeResume(*args):
         None, 
         None, 
         text=userFullName, 
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
         )
     pdf.set_font("Cambria", "", 11)
     pdf.cell(
         None,
         txt=contactLine,
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
     )
     pdf.image(
         "/components/hrBreak.png",
@@ -82,21 +83,21 @@ def makeResume(*args):
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Objective:",
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
     )
     pdf.set_font("Cambria", "", 11)
     pdf.cell(
         txt=userDesc,
-        new_x="LEFT",
-        new_y="BOTTOM"      
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST      
     )
     educationStr, educationDateStr = m2.format_education(userEducation)
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Education",
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
     )
     educationStrList = educationStr.split("\n")
     educationDateStrList = educationDateStr.split("\n")
@@ -107,30 +108,30 @@ def makeResume(*args):
         pdf.cell(
             0,
             txt=educationStrList[tempInt1],
-            new_x="LEFT",
+            new_x=XPos.LEFT,
         )
         tempInt1 += 1
         pdf.cell(
             0,
             educationDateStrList[tempInt2],
-            new_x="LEFT",
-            new_y="BOTTOM",
-            align="R"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST,
+            align=Align.R
         )
         tempInt2 += 1
         pdf.set_font("Cambria", "", 11)
         pdf.cell(
             0,
             txt=educationStrList[tempInt1],
-            new_x="LEFT"
+            new_x=XPos.LEFT
         )
         tempInt1 += 1
         pdf.cell(
             0,
             educationDateStrList[tempInt2],
-            new_x="LEFT",
-            new_y="BOTTOM",
-            align="R"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST,
+            align=Align.R
         )
         tempInt2 += 1
         curDetail = educationStrList[tempInt1]
@@ -138,21 +139,21 @@ def makeResume(*args):
             pdf.cell(
                 0,
                 txt=curDetail,
-                new_x="LEFT",
-                new_y="BOTTOM",
+                new_x=XPos.LEFT,
+                new_y=YPos.LAST,
             )
             tempInt1 += 1
             curDetail = educationStrList[tempInt1]
         pdf.cell(
             txt="\t",
-            new_x="LEFT",
-            new_y="BOTTOM"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST
         )
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Relevent Experience",
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
     )
     workStr, workDateStr = m2.format_work_experience_relevent(userWork)
     listWorkStr = workStr.split("\n")
@@ -163,22 +164,22 @@ def makeResume(*args):
         pdf.cell(
             0,
             txt = listWorkStr[tempInt1],
-            new_x="LEFT"
+            new_x=XPos.LEFT
         )
         tempInt1 += 1
         pdf.cell(
             0,
             txt=workDate,
-            new_x="LEFT",
-            new_y="BOTTOM",
-            align="R"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST,
+            align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
         pdf.cell(
             0,
             txt = listWorkStr[tempInt1],
-            new_x="LEFT",
-            new_y="BOTTOM"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST
         )
         tempInt1 += 1
         curDetail = listWorkStr[tempInt1]
@@ -186,22 +187,65 @@ def makeResume(*args):
             pdf.cell(
                 0,
                 txt=curDetail,
-                new_x="LEFT",
-                new_y="BOTTOM",
+                new_x=XPos.LEFT,
+                new_y=YPos.LAST,
             )
             tempInt1 += 1
             curDetail = listWorkStr[tempInt1]
         pdf.cell(
             txt="\t",
-            new_x="LEFT",
-            new_y="BOTTOM"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST
         )
-    #TODO:create project and skill printouts
+    #TODO:create project 
+    skillYearList = [
+        [
+            "skill1", 
+            "skill2"
+            ],
+            [
+                "skill3", 
+                "skill4"
+                ]]
+    if len(skillYearList) > 0:
+        pdf.set_font("Cambria", "BU", 11)
+        pdf.cell(
+            0,
+            txt="Skills",
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST
+        )
+        pdf.set_font("Cambria", "", 11)
+    for numlist in range(0, len(skillYearList)):
+        if len(skillYearList[numlist]) == 2:
+            newString = ", and ".join(skillYearList[numlist])
+        elif len(skillYearList[numlist]) == 1:
+            newString = skillYearList[numlist][0]
+        elif len(skillYearList[numlist]) <= 0:
+            continue
+        else:
+            newTempString = ", and ".join(skillYearList[numlist])
+            newString = newTempString.replace(", and ", ", ", list(skillYearList[numlist])-2)
+        pdf.cell(
+        txt=newString,
+        new_x=XPos.RIGHT,
+        new_y=YPos.TOP
+        )
+        if numlist > 0:
+            yearString = "....."+ str(numlist) + " Year"
+            if numlist > 1:
+                yearString = yearString + "s"
+        else:
+            yearstring = ".....Entry Level"
+        pdf.cell(
+            0,
+            txt=yearString
+        )
     pdf.set_font("Cambria", "BU", 11)
     pdf.cell(
         txt="Additional Experience",
-        new_x="LEFT",
-        new_y="BOTTOM"
+        new_x=XPos.LEFT,
+        new_y=YPos.LAST
     )
     workStr, workDateStr = m2.format_work_experience_other(userWork)
     listWorkStr = workStr.split("\n")
@@ -212,22 +256,22 @@ def makeResume(*args):
         pdf.cell(
             0,
             txt = listWorkStr[tempInt1],
-            new_x="LEFT"
+            new_x=XPos.LEFT
         )
         tempInt1 += 1
         pdf.cell(
             0,
             txt=workDate,
-            new_x="LEFT",
-            new_y="BOTTOM",
-            align="R"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST,
+            align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
         pdf.cell(
             0,
             txt = listWorkStr[tempInt1],
-            new_x="LEFT",
-            new_y="BOTTOM"
+            new_x=XPos.LEFT,
+            new_y=YPos.LAST
         )
         tempInt1 += 1
         curDetail = listWorkStr[tempInt1]
@@ -235,14 +279,14 @@ def makeResume(*args):
             pdf.cell(
                 0,
                 txt=curDetail,
-                new_x="LEFT",
-                new_y="BOTTOM",
+                new_x=XPos.LEFT,
+                new_y=YPos.LAST,
             )
             tempInt1 += 1
             curDetail = listWorkStr[tempInt1]
         pdf.cell(
             txt="\t",
-            new_x="LEFT",
-            new_y="BOTTOM"
+            new_x=XPos.LEFT,
+            new_y=FPDF.YPos.BOTT
         )
     
