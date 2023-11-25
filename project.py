@@ -7,6 +7,13 @@ from personalInfoTab import makePersonalInformationtab
 from workTabFrame import WorkFrame
 from skilltabframe2 import skillFrame
 from settings_tab_frame import make_settings_tab
+import pip
+
+def install(package):
+    if hasattr(pip, 'main'):
+        pip.main(['install', package])
+    else:
+        pip._internal.main(['install', package])
 
 def mainApp():
     root = tk.Tk()
@@ -145,6 +152,7 @@ genericProject = {
     }],
 }
 # ... Other generic structures ...
-
+if __name__ == '__main__':
+    install('fpdf2')
 mainApp()
 

@@ -11,13 +11,14 @@ def addNewSkill(skillName, skillYear):
     global userSkills
 
     # Check if the skill already exists in userSkills
+    tempInt = 0
     existingSkill = next((skill for skill in userSkills if skill['skillName'] == skillName), None)
     if existingSkill:
         tempInt = 0
         for skill in userSkills:
             if skill["skillName"] == skillName:
                 break
-            tempint += 1
+            tempInt += 1
         # Prompt for overwrite
         overwriteSkill = messagebox.askyesno(title="Duplicate Skill Detected", 
                                              message="This skill is in there, do you wish to overwrite it?")

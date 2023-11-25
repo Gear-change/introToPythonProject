@@ -60,18 +60,48 @@ def openRelevencyFrame(*args):
     rWindow = tk.Tk()
     rWindow.title("Relevency window")
     rFrame = ttk.Frame(rWindow)
+    ScrollBarForRelevency = tk.Scrollbar(rFrame, orient="vertical")
+    ScrollBarForRelevency.grid(column=1,row=0)
+    rCanvas = tk.Canvas(rFrame,yscrollcommand=ScrollBarForRelevency.set)
+    rCanvas.grid(column=0,row=0)
+    ScrollBarForRelevency.config(command=rCanvas.yview)
+    rMainFrame = tk.Frame(rCanvas)
+    
     rFrame.grid()
     curCol = 0
     curRow = 0
     curUID = 0
     ttk.Label(
-        rFrame, 
+        rMainFrame, 
+        text='type in the name you want for the pdf:'
+        ).grid(
+            column=curCol,
+            row=curRow
+            )
+    curRow += 1
+    userFileName = tk.StringVar(rMainFrame)
+    newEntry = tk.Entry(rMainFrame, textvariable=userFileName)
+    newEntry.grid(column=curCol,row=curRow)
+    curRow += 1
+    ttk.Label(
+        rMainFrame, 
+        text="Describe yourself to your prospective employer:"
+        ).grid(
+            column=curCol, 
+            row=curRow
+            )
+    curRow+=1
+    userDesc = tk.Text(rMainFrame, height= 5, width=100,)
+    userDesc.grid(column=curCol, row=curRow)
+    curRow += 1
+    ttk.Label(
+        rMainFrame, 
         text="select the items that are relevent to the job you are applying to:"
         ).grid(column=curCol, row=curRow)
     curRow += 1
     for degree in userEducation:
         newCheckButton = CreateNewCheckButton(
-            rFrame, 
+            rMainFrame, 
             degree['isRelevent'], 
             degreeToString(degree),
             curUID
@@ -79,7 +109,7 @@ def openRelevencyFrame(*args):
         curUID += 1
         newCheckButton.grid(column=curCol, row=curRow)
         curRow += 1
-        degreeDetailFrame = tk.Frame(rFrame)
+        degreeDetailFrame = tk.Frame(rMainFrame)
         degreeDetailFrame.grid(column=curCol,row=curRow)
         aCol = 0
         aRow = 0
@@ -97,7 +127,7 @@ def openRelevencyFrame(*args):
         curRow += 1
     for work in userWork:
         newCheckButton = CreateNewCheckButton(
-            rFrame,
+            rMainFrame,
             work['isRelevent'],
             workToString(work)+(" as :"),
             curUID
@@ -106,7 +136,7 @@ def openRelevencyFrame(*args):
         newCheckButton.grid(column=curCol,row=curRow)
         curRow += 1
         ttk.Label(
-            rFrame,
+            rMainFrame,
             text="\t select the occupation title for this job you wish this employer to see:"
             ).grid(
                 column=curCol,row=curRow
@@ -115,7 +145,7 @@ def openRelevencyFrame(*args):
         tempIntTwo = 0
         for title in work["occupationTitles"]:
             newRadioButton = CreateNewCheckButton(
-                rFrame,
+                rMainFrame,
                 title["isRelevent"],
                 detail.get("OccupationTitle"),
                 curUID
@@ -126,7 +156,7 @@ def openRelevencyFrame(*args):
             tempIntTwo += 1
         for detail in work["occupationDetails"]:
             newCheckButton = CreateNewCheckButton(
-                rFrame, 
+                rMainFrame, 
                 detail["isRelevent"], 
                 detail.get("OccupationDetail"),
                 curUID
@@ -135,11 +165,10 @@ def openRelevencyFrame(*args):
             newCheckButton.grid(column=curCol,row=curRow)
             curRow += 1
         curRow += 1
-        intTemp += 1
     curRow+=1
     for skill in userSkills:
         newCheckButton = CreateNewCheckButton(
-            rFrame, 
+            rMainFrame, 
             skill['isRelevent'],
             skillToString(skill),
             curUID
@@ -150,7 +179,7 @@ def openRelevencyFrame(*args):
     curRow+=1
     for project in userProjects:
         newCheckButton = CreateNewCheckButton(
-            rFrame,
+            rMainFrame,
             project["isRelevent"],
             projectToString(project),
             curUID
@@ -160,7 +189,7 @@ def openRelevencyFrame(*args):
         curRow += 1
         for detail in project["projectDetails"]:
             newCheckButton = CreateNewCheckButton(
-                rFrame,
+                rMainFrame,
                 detail['isRelevent'],
                 detail["projectDetail"],
                 curUID
@@ -169,34 +198,11 @@ def openRelevencyFrame(*args):
             newCheckButton.grid(column=curCol,row=curRow)
             curRow += 1
     curRow+=1
-    ttk.Label(
-        rFrame, 
-        text="Describe yourself to said employer:"
-        ).grid(
-            column=curCol, 
-            row=curRow
-            )
-    curRow+=1
-    userDesc = tk.Text(rFrame, height= 5, width=100,)
-    userDesc.grid(column=curCol, row=curRow)
-    curRow += 1
-    ttk.Label(
-        rFrame, 
-        text='type in the name you want for the pdf:'
-        ).grid(
-            column=curCol,
-            row=curRow
-            )
-    curRow += 1
-    userFileName = tk.StringVar()
-    newEntry = tk.Entry(rFrame, textvariable=userFileName)
-    newEntry.grid(column=curCol,row=curRow)
-    curRow += 1
     newButton = tk.Button(
-        rFrame,
+        rMainFrame,
         text="Make resume",
         command=lambda:setRelevenceyFinal(
-            userFileName,
+            userFileName.get(),
             userDesc, 
             firstName, 
             middleInitial, 
@@ -211,13 +217,15 @@ def openRelevencyFrame(*args):
             userProjects
             )
     )
+    
     newButton.grid(column=curCol, row=curRow)
+    rMainFrame.pack()
     rFrame.mainloop()
 def setRelevenceyFinal(*args):
     #spool out the variables
     userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
     makeResume(
-        userFileName.get(),
+        userFileName,
         userDesc.get("1.0", "end-1c"), 
         firstName.get(), 
         middleInitial.get(), 
