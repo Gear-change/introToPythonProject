@@ -2,7 +2,6 @@
 from fpdf import FPDF, YPos, XPos, Align
 import m2akeresumescript as m2
 from a2345 import sort_skills
-from Output.outputRouter import toOutputFolder
 def BoolDecimal(string):
     boolOut = bool
     try:
