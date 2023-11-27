@@ -1,5 +1,5 @@
 
-from fpdf import FPDF, YPos, XPos, Align
+from fpdf import *
 import m2akeresumescript as m2
 from a2345 import sort_skills
 def BoolDecimal(string):
@@ -12,6 +12,17 @@ def BoolDecimal(string):
         #there is no "•" in the string, thus a exeption is raised
         boolOut = False
     return boolOut
+
+def getStringHeightNeeded(width, fontSize):
+    pageArea = 521
+    stringLengthInt = width
+    tempint = 0
+    while stringLengthInt > 0:
+        stringLengthInt -= pageArea
+        tempint += 1
+    tempint2 = tempint*(fontSize+2)
+    return tempint2
+    
 
 def makeResume(*args):
     #TODO: MAKE THE RESUME PRINT FUNCTION
@@ -70,17 +81,15 @@ def makeResume(*args):
     pdf.add_font("Calibri", "B", fname="C:\Windows\Fonts\\calibrib.ttf")
     pdf.set_margins(marginX, marginYTop, marginX)
     pdf.set_font("Cambria", "B", 16)
-
-    pdf.cell(
-        None, 
-        None, 
+    pdf.multi_cell(
+        0, 
         text=userFullName, 
         new_x=XPos.LEFT,
         new_y=YPos.NEXT
         )
     pdf.set_font("Cambria", "", 11)
-    pdf.cell(
-        None,
+    pdf.multi_cell(
+        0,
         txt=contactLine,
         new_x=XPos.LEFT,
         new_y=YPos.NEXT
@@ -99,13 +108,15 @@ def makeResume(*args):
         True
     )
     pdf.set_font("Calibri", "BU", 11)
-    pdf.cell(
+    pdf.multi_cell(
+        0,
         txt="Objective:",
         new_x=XPos.LEFT,
         new_y=YPos.NEXT
     )
     pdf.set_font("Cambria", "", 11)
-    pdf.cell(
+    pdf.multi_cell(
+        0,
         txt=userDesc,
         new_x=XPos.LEFT,
         new_y=YPos.NEXT      
@@ -118,6 +129,7 @@ def makeResume(*args):
     if len(educationStrList) > 0:
         pdf.set_font("Calibri", "BU", 11)
         pdf.cell(
+            0,
             txt="Education",
             new_x=XPos.LEFT,
             new_y=YPos.NEXT
@@ -133,7 +145,7 @@ def makeResume(*args):
         tempInt1 += 1
         if len(educationStrList) == tempInt1:
             break
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt=educationDateStrList[tempInt2],
             new_x=XPos.LEFT,
@@ -148,7 +160,7 @@ def makeResume(*args):
             new_x=XPos.LEFT
         )
         tempInt1 += 1
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt=educationDateStrList[tempInt2],
             new_x=XPos.LEFT,
@@ -158,7 +170,7 @@ def makeResume(*args):
         tempInt2 += 1
         curDetail = educationStrList[tempInt1]
         while len(educationStrList)-1 != tempInt1 and BoolDecimal(curDetail):
-            pdf.cell(
+            pdf.multi_cell(
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
@@ -166,7 +178,7 @@ def makeResume(*args):
             )
             tempInt1 += 1
             curDetail = educationStrList[tempInt1]
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt="\t",
             new_x=XPos.LEFT,
@@ -180,7 +192,8 @@ def makeResume(*args):
     tempInt1 = 0
     if len(listDateWorkStr) > 0:
         pdf.set_font("Calibri", "BU", 11)
-        pdf.cell(
+        pdf.multi_cell(
+            0,
             txt="Relevent Experience",
             new_x=XPos.LEFT,
             new_y=YPos.NEXT
@@ -203,7 +216,7 @@ def makeResume(*args):
             align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt = listWorkStr[tempInt1],
             new_x=XPos.LEFT,
@@ -214,7 +227,7 @@ def makeResume(*args):
             break
         curDetail = listWorkStr[tempInt1]
         while BoolDecimal(curDetail):
-            pdf.cell(
+            pdf.multi_cell(
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
@@ -224,7 +237,7 @@ def makeResume(*args):
             if len(listWorkStr)-1 == tempInt1:
                 break
             curDetail = listWorkStr[tempInt1]
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt="\t",
             new_x=XPos.LEFT,
@@ -240,7 +253,7 @@ def makeResume(*args):
     tempInt1 = 0
     if len(dateProjectStrList) > 0:
         pdf.set_font("Calibri", "BU", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             text="Other Relevent Experiences:",
             new_x=XPos.LEFT,
@@ -249,7 +262,7 @@ def makeResume(*args):
         pdf.set_font("Calibri", "B", 11)
     for project in dateProjectStrList:
         pdf.set_font("Calibri", "B", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             text=projectStrList[tempInt1],
             new_x=XPos.LMARGIN,
@@ -258,7 +271,7 @@ def makeResume(*args):
         tempInt1 += 1
         if len(projectStrList)-1 <= tempInt1:
             break
-        pdf.cell(
+        pdf.multi_cell(
             0,
             text=project,
             align=Align.R,
@@ -268,7 +281,7 @@ def makeResume(*args):
         pdf.set_font("Cambria", "", 11)
         curDetail = projectStrList[tempInt1]
         while BoolDecimal(curDetail):
-            pdf.cell(
+            pdf.multi_cell(
                 0,
                 text=curDetail,
                 new_x=XPos.LEFT,
@@ -278,7 +291,7 @@ def makeResume(*args):
             if len(projectStrList) == tempInt1:
                 break
             curDetail = projectStrList[tempInt1]
-        pdf.cell(
+        pdf.multi_cell(
             0,
             text="\t",
             new_x=XPos.LEFT,
@@ -287,7 +300,7 @@ def makeResume(*args):
     skillYearList = sort_skills(userSkills)
     if len(skillYearList) > 0:
         pdf.set_font("Calibri", "BU", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt="Skills",
             new_x=XPos.LEFT,
@@ -303,11 +316,11 @@ def makeResume(*args):
             continue
         else:
             newTempString = ", and ".join(skillYearList[numlist])
-            newString = newTempString.replace(", and ", ", ", list(skillYearList[numlist])-2)
+            newString = newTempString.replace(", and ", ", ", len(skillYearList[numlist])-2)
         pdf.cell(
-        txt=newString,
-        new_x=XPos.RIGHT,
-        new_y=YPos.TOP
+            txt=newString,
+            new_x=XPos.RIGHT,
+            new_y=YPos.TOP
         )
         if numlist > 0:
             yearString =  str(numlist) + " Year"
@@ -315,14 +328,14 @@ def makeResume(*args):
                 yearString = yearString + "s"
         else:
             yearString = "Entry Level"
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt=yearString,
             new_x=XPos.LMARGIN,
             new_y=YPos.NEXT,
             align=Align.R
         )
-    pdf.cell(
+    pdf.multi_cell(
         0,
         text="\t",
         new_x=XPos.LEFT,
@@ -334,14 +347,15 @@ def makeResume(*args):
     listDateWorkStr = workDateStr.split("\n")
     tempInt1 = 0
     if len(listWorkStr) != 0 and workStr != '':
-        pdf.cell(
+        pdf.multi_cell(
+            0,
             txt="Additional Experience",
             new_x=XPos.LEFT,
             new_y=YPos.NEXT 
         )
     for workDate in listDateWorkStr:
         pdf.set_font("Cambria", "B", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt = listWorkStr[tempInt1],
             new_x=XPos.LEFT
@@ -349,7 +363,7 @@ def makeResume(*args):
         tempInt1 += 1
         if len(listWorkStr)-1 <= tempInt1:
             break
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt=workDate,
             new_x=XPos.LEFT,
@@ -357,7 +371,7 @@ def makeResume(*args):
             align=Align.R
         )
         pdf.set_font("Cambria", "", 11)
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt = listWorkStr[tempInt1],
             new_x=XPos.LEFT,
@@ -366,7 +380,7 @@ def makeResume(*args):
         tempInt1 += 1
         curDetail = listWorkStr[tempInt1]
         while len(listWorkStr)-1 != tempInt1 and BoolDecimal(curDetail):
-            pdf.cell(
+            pdf.multi_cell(
                 0,
                 txt=curDetail,
                 new_x=XPos.LEFT,
@@ -376,7 +390,7 @@ def makeResume(*args):
             if len(listWorkStr)-1 == tempInt1:
                 break
             curDetail = listWorkStr[tempInt1]
-        pdf.cell(
+        pdf.multi_cell(
             0,
             txt="\t",
             new_x=XPos.LEFT,

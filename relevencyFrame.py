@@ -60,7 +60,11 @@ def openRelevencyFrame(*args):
     rWindow = tk.Tk()
     rWindow.title("Relevency window")
     rFrame = ttk.Frame(rWindow)
-    ScrollBarForRelevency = tk.Scrollbar(rFrame, orient="vertical")
+    ScrollBarForRelevency = tk.Scrollbar(
+        rFrame, 
+        width=20,
+        orient="vertical"
+        )
     ScrollBarForRelevency.grid(column=1,row=0)
     rCanvas = tk.Canvas(rFrame,yscrollcommand=ScrollBarForRelevency.set)
     rCanvas.grid(column=0,row=0)
