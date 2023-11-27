@@ -2,7 +2,7 @@
 from fpdf import FPDF, YPos, XPos, Align
 import m2akeresumescript as m2
 from a2345 import sort_skills
-import os
+from Output.outputRouter import toOutputFolder
 def BoolDecimal(string):
     boolOut = bool
     try:
@@ -383,6 +383,6 @@ def makeResume(*args):
             new_x=XPos.LEFT,
             new_y=YPos.LAST
         )
-    outLocation = "\output\ " + userFileName
-    outLocation.replace(" ", "", 1)
-    pdf.output(userFileName)
+    outputLocStr = "Output\ "+userFileName
+    outputLocStr.replace(" ", "")
+    pdf.output(name=outputLocStr)
