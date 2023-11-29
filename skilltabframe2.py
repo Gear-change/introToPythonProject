@@ -20,8 +20,10 @@ def addNewSkill(skillName, skillYear):
                 break
             tempInt += 1
         # Prompt for overwrite
-        overwriteSkill = messagebox.askyesno(title="Duplicate Skill Detected", 
-                                             message="This skill is in there, do you wish to overwrite it?")
+        overwriteSkill = messagebox.askyesno(
+            title="Duplicate Skill Detected", 
+            message="This skill is in there, do you wish to overwrite it?"
+            )
         if overwriteSkill:
             # Replace the existing skill with the new one, but we want to keep the others
             userSkills.pop(tempInt)

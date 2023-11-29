@@ -147,7 +147,7 @@ def openRelevencyFrame(*args):
                 )
         curRow += 1
         tempIntTwo = 0
-        for title in work["occupationTitles"]:
+        for title in work["OccupationTitle"]:
             newRadioButton = CreateNewCheckButton(
                 rMainFrame,
                 title["isRelevent"],

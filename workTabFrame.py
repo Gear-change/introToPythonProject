@@ -21,7 +21,7 @@ def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist,
         "companyName":companyName,
         "companyCity":companyCity,
         "companyState":companyState,
-        "occupationTitles":OccupationTitlelist,
+        "OccupationTitle":OccupationTitlelist,
         "occupationDetails":occupationDetailsList,
         #is relevent should only make them sorted between them for only this one, the other ones don't print if it is not relevent.
         "isRelevent":True,

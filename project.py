@@ -118,7 +118,7 @@ genericWork = {
     "companyName":"",
     "companyCity":"",
     "companyState":"",
-    "occupationTitles":[{
+    "OccupationTitle":[{
         "OccupationTitle":"",
         "isRelevent":True,
         "titleNo":0

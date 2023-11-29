@@ -14,7 +14,7 @@ def format_work_experience_relevent(userWork):
     work_date_str = ""
     for work in userWork:
         if work['isRelevent']:
-            occupation_titles = '& '.join(title['OccupationTitle'] for title in work['occupationTitles'] if title['isRelevent'])
+            occupation_titles = '& '.join(title['OccupationTitle'] for title in work['OccupationTitle'] if title['isRelevent'])
             occupation_details = '\n  •  '.join(detail['OccupationDetail'] for detail in work['occupationDetails'] if detail['isRelevent'])
             work_str += f"{occupation_titles} \n{work['companyName']}, {work['companyCity']}, {work['companyState']}\n  •  {occupation_details}\n"
             work_date_str += f"{monthToString(work['dateStartMonth'])} {str(work['dateStartYear'])} - {monthToString(work['dateEndMonth'])} {str(work['dateEndYear'])}\n"
@@ -24,7 +24,7 @@ def format_work_experience_other(userWork):
     work_date_str = ""
     for work in userWork:
         if not work['isRelevent']:
-            occupation_titles = '& '.join(title['OccupationTitle'] for title in work['occupationTitles'] if title['isRelevent'])
+            occupation_titles = '& '.join(title['OccupationTitle'] for title in work['OccupationTitle'] if title['isRelevent'])
             occupation_details = '\n  •  '.join(detail['OccupationDetail'] for detail in work['occupationDetails'] if detail['isRelevent'])
             work_str += f"{occupation_titles}\t\t{monthToString(work['dateStartMonth'])}-{str(work['dateStartYear'])} to {monthToString(work['dateEndMonth'])}-{str(work['dateEndYear'])} \n{work['companyName']}, {work['companyCity']}, {work['companyState']}\n  •  {occupation_details}\n"
             work_date_str += f"{monthToString(work['dateStartMonth'])} {str(work['dateStartYear'])} - {monthToString(work['dateEndMonth'])} {str(work['dateEndYear'])}\n"
