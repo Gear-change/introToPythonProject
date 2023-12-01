@@ -1,0 +1,11 @@
+the difficulties I had encountered making this project include:
+1. figuring out tkinter, which is what the breezy plugin was based on, as it is included with python 3 by default, there were many issues regarding x not showing up. this took time.
+2. figuring out fpdf2, which is a python library for building pdf's, it is a branch of fpdf. fpdf and by extension fpdf2 was finiky to work with, but we got it working.
+3. ensuring I was not accedentally excluding my partner, as I started to have fun while coding, and became a minor workaholic.
+4. NULL VARIABLE POINTERS, they are not fun, especially when reading a list of strings.
+5. Saving and Loading of inputs, still partially not done due to them not clearing when loading, but that is more a minor issue, not a major, and considering all the work needed, not a major issue.
+6. am introvert. breaking my shell hard.
+7. deciding to break up the single large file into many smaller ones created bugs that I was not expecting, but they were the easily fixed kind, for the most part.
+8. the names of said files starting with numbers caused issues when the IMPORT function was called on them, python must interpret them as a different instruction.
+9. another class project going to defcon 1 due to that groups presention being pushed forward was not benifitial to the coding of this project.
+10. I have autism. communication hard.
