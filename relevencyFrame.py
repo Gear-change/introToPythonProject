@@ -4,6 +4,7 @@ from tkinter import ttk
 from EducationTabFrame import degreeToString
 from monthStringScript import monthToString
 from makeResumeScript import makeResume
+from VerticalScrolledFrame import VerticalScrolledFrame
 def setFlag(aVar, var):
         var = aVar.get()
 def CreateNewCheckButton(parent, thisBool, text, uid):
@@ -60,17 +61,8 @@ def openRelevencyFrame(*args):
     rWindow = tk.Tk()
     rWindow.title("Relevency window")
     rFrame = ttk.Frame(rWindow)
-    ScrollBarForRelevency = tk.Scrollbar(
-        rFrame, 
-        width=20,
-        orient="vertical"
-        )
-    ScrollBarForRelevency.grid(column=1,row=0)
-    rCanvas = tk.Canvas(rFrame,yscrollcommand=ScrollBarForRelevency.set)
-    rCanvas.grid(column=0,row=0)
-    ScrollBarForRelevency.config(command=rCanvas.yview)
-    rMainFrame = tk.Frame(rCanvas)
-    
+    newScrollableFrame = VerticalScrolledFrame(rFrame)
+    rMainFrame = tk.Frame(newScrollableFrame.interior)
     rFrame.grid()
     curCol = 0
     curRow = 0
@@ -95,7 +87,7 @@ def openRelevencyFrame(*args):
             row=curRow
             )
     curRow+=1
-    userDesc = tk.Text(rMainFrame, height= 5, width=100,)
+    userDesc = tk.Text(rMainFrame, height= 5, width=100)
     userDesc.grid(column=curCol, row=curRow)
     curRow += 1
     ttk.Label(
@@ -151,11 +143,11 @@ def openRelevencyFrame(*args):
             newRadioButton = CreateNewCheckButton(
                 rMainFrame,
                 title["isRelevent"],
-                detail.get("OccupationTitle"),
+                title.get("OccupationTitle"),
                 curUID
             )
             curUID += 1
-            newRadioButton.grid(column=curCol, row=curRow)
+            newRadioButton.grid(column=curCol,row=curRow)
             curRow += 1
             tempIntTwo += 1
         for detail in work["occupationDetails"]:
@@ -224,7 +216,9 @@ def openRelevencyFrame(*args):
     
     newButton.grid(column=curCol, row=curRow)
     rMainFrame.pack()
+    newScrollableFrame.pack()
     rFrame.mainloop()
+    
 def setRelevenceyFinal(*args):
     #spool out the variables
     userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
