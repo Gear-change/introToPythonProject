@@ -19,12 +19,7 @@ def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, s
         "isRelevent": True
     }
     global userEducation
-    if newEducation in userEducation:
-        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
-        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
-        newAlert.show()
-    else:
-        userEducation.append(newEducation)
+    userEducation.append(newEducation)
 
 def degreeToString(degree):
     try:

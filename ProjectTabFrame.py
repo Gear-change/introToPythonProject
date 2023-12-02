@@ -14,12 +14,7 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
         "projectDetails":projectDetailsList,
     }
     global userProjects
-    if newProject in userProjects:
-        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
-        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
-        newAlert.show()
-    else:
-        userProjects.append(newProject)
+    userProjects.append(newProject)
 
 def makeOtherTab(parent, listProjects):
     global userProjects

@@ -31,12 +31,7 @@ def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist,
         "dateStartMonth":startMonth,
     }
     global userWork
-    if newWork in userWork:
-        #an alert should popup if this work already exists, asking if it should still be added, overwritten or to cancel adding
-        newAlert = messagebox(None, title="duplicate skill", detail="duplicate skill detected")
-        newAlert.show()
-    else:
-        userWork.append(newWork)
+    userWork.append(newWork)
 
 def WorkFrame(parent, listWork):
     global userWork
