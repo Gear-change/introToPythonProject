@@ -6,21 +6,6 @@ from personalInfoTab import makePersonalInformationtab
 from workTabFrame import WorkFrame
 from skilltabframe2 import skillFrame
 from settings_tab_frame import make_settings_tab
-import pip
-
-def install(package):
-    """
-    Install a package using pip. If pip has a 'main' attribute, use that, 
-    otherwise use '_internal.main'. This function is used to ensure that 
-    required packages are installed.
-
-    Args:
-    package (str): The name of the package to install.
-    """
-    if hasattr(pip, 'main'):
-        pip.main(['install', package])
-    else:
-        pip._internal.main(['install', package])
 
 def mainApp():
     """
@@ -167,7 +152,5 @@ genericProject = {
 # ... Other generic structures ....
 
 #instal fpdf2
-if __name__ == '__main__':
-    install('fpdf2')
 mainApp()
 
