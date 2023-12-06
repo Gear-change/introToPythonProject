@@ -10,8 +10,8 @@ def create_label_entry(parent, label_text, input):
 def create_check_box_label(parent, string_text, input):
     return ttk.Checkbutton(parent, text=string_text, variable=input, offvalue=False, onvalue=True)
 
-def create_label_text_field(parent, label_text):
-    return ttk.Label(parent, text=label_text, wraplength=125), tk.Text(parent, width=50, height=6)
+def create_label_text_field(parent, label_text, name_of_textfield):
+    return ttk.Label(parent, text=label_text, wraplength=125), tk.Text(parent, width=50, height=6, name=name_of_textfield)
 
 def create_spin_month_year(parent, label_text, month=1, year=1950, years_list=None):
     if years_list is None:

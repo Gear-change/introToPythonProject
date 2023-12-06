@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from tkinter import Tcl
 from commontools2 import create_label_entry, create_combo_set, create_spin_month_year, create_label_text_field, make_list_from_text
 
 def make_list_from_text_2(text_box_in, string_detail_name):
@@ -15,7 +16,7 @@ def make_list_from_text_2(text_box_in, string_detail_name):
         intTempNo += 1
     return newList
 
-def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist, 
+def addWorkToList(userWork2, companyName, companyCity, companyState, OccupationTitlelist, 
                   occupationDetailsList, startYear, startMonth, endYear, endMonth):
     newWork = {
         "companyName":companyName,
@@ -31,22 +32,25 @@ def addWorkToList(companyName, companyCity, companyState, OccupationTitlelist,
         "dateStartMonth":startMonth,
     }
     global userWork
+    userWork = userWork2
+    global itemList
     userWork.append(newWork)
 
 def WorkFrame(parent, listWork):
     global userWork
     userWork = listWork
     #first the variables and frames
-    thisFrame = tk.Frame(parent)
-    companyName = tk.StringVar()
-    companyCity = tk.StringVar()
-    companyState = tk.StringVar()
-    occupationTitle = tk.Text()
-    occupationDetailsText = tk.Text()
-    oDateStartYear = tk.IntVar()
-    oDateStartMonth = tk.IntVar()
-    oDateEndYear = tk.IntVar()
-    oDateEndMonth = tk.IntVar()
+    Tcl
+    thisFrame = tk.Frame(parent, name="worFrame")
+    companyName = tk.StringVar(parent, name="companyName")
+    companyCity = tk.StringVar(parent, name="companyCity")
+    companyState = tk.StringVar(parent, name="companyState")
+    occupationTitle = tk.Text(parent, name="occupationTitle")
+    occupationDetailsText = tk.Text(parent, name="occupationDetailsText")
+    oDateStartYear = tk.IntVar(parent, name= "oDateStartYear")
+    oDateStartMonth = tk.IntVar(parent, name= "oDateStartMonth")
+    oDateEndYear = tk.IntVar(parent, name="oDateEndYear")
+    oDateEndMonth = tk.IntVar(parent, name="oDateEndMonth")
 
     #next the years list and other misc variables
 
@@ -107,29 +111,34 @@ def WorkFrame(parent, listWork):
     newComboBox1.grid(column=curCol,row=curRow)
     curCol = 0
     curRow += 1
-    newLabel, occupationTitle = create_label_text_field(thisFrame, "enter each title you had during your time here:")
+    newLabel, occupationTitle = create_label_text_field(thisFrame, "enter each title you had during your time here:", "occupationTitle")
     newLabel.grid(column=curCol,row=curRow)
     curCol+=1
     occupationTitle.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    newLabel, occupationDetailsText = create_label_text_field(thisFrame, "enter the responsabilities you had at this job: ")
+    newLabel, occupationDetailsText = create_label_text_field(thisFrame, "enter the responsabilities you had at this job: ", "occupationDetailsText")
     newLabel.grid(column=curCol,row=curRow)
     curCol+=1
     occupationDetailsText.grid(column=curCol,row=curRow, columnspan=3)
     curCol = 0
     curRow += 1
-    btnSubmit = tk.Button(thisFrame, text="Add to Work history", 
-                                command=lambda:addWorkToList(
-                                    companyName.get(),
-                                    companyCity.get(),
-                                    companyState.get(),
-                                    make_list_from_text_2(occupationTitle, "OccupationTitle"),
-                                    make_list_from_text(occupationDetailsText, "OccupationDetail"),
-                                    oDateStartYear.get(),
-                                    oDateStartMonth.get(),
-                                    oDateEndYear.get(),
-                                    oDateEndMonth.get()
-                                )) # Add other .get() calls
+    btnSubmit = tk.Button(
+        thisFrame, 
+        text="Add to Work history", 
+        command=lambda:addWorkToList(
+            userWork,
+            companyName.get(),
+            companyCity.get(),
+            companyState.get(),
+            make_list_from_text_2(occupationTitle, "OccupationTitle"),
+            make_list_from_text(occupationDetailsText, "OccupationDetail"),
+            oDateStartYear.get(),
+            oDateStartMonth.get(),
+            oDateEndYear.get(),
+            oDateEndMonth.get()
+        ),
+        name="btnSubmit"
+        ) # Add other .get() calls
     btnSubmit.grid(column=curCol, row=curRow)
     return thisFrame

@@ -16,10 +16,10 @@ def install(package):
         pip._internal.main(['install', package])
 
 def mainApp():
+    global root
     root = tk.Tk()
     root.title("Resume Generator")
     tabControl = ttk.Notebook(root)
-
     tab1 = ttk.Frame(tabControl)
     tab2 = ttk.Frame(tabControl)
     tab3 = ttk.Frame(tabControl)
@@ -77,6 +77,7 @@ def mainApp():
     newFrame.grid(column=0, row=0)
 
     # ... Now the fun begins.
+
     newFrame = make_settings_tab(
         tab6, firstName, middleInitial, lastName, userLinkedin, userGithub, 
         userPhone, userEmail, userWork, userEducation, userSkills, userProjects

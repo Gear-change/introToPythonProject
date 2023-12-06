@@ -20,6 +20,7 @@ def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, s
     }
     global userEducation
     userEducation.append(newEducation)
+    global itemList
 
 def degreeToString(degree):
     try:
@@ -31,16 +32,16 @@ def degreeToString(degree):
 def makeEducationTabFrame(parent, listEducation):
     global userEducation
     userEducation = listEducation
-    newFrame = tk.Frame(parent)
-    DegreeType = tk.StringVar()
-    DegreeField = tk.StringVar()
-    degreeMinor = tk.StringVar()
-    schoolName = tk.StringVar()
-    schoolCity = tk.StringVar()
-    schoolState = tk.StringVar()
-    SchoolDateEndMonth = tk.IntVar()
-    SchoolDateEndYear = tk.IntVar()
-    GPA = tk.StringVar()
+    newFrame = tk.Frame(parent, name="eduFrame")
+    DegreeType = tk.StringVar(parent, name="DegreeType")
+    DegreeField = tk.StringVar(parent, name = "DegreeField")
+    degreeMinor = tk.StringVar(parent, name= "degreeMinor")
+    schoolName = tk.StringVar(parent, name="schoolName")
+    schoolCity = tk.StringVar(parent, name="schoolCity")
+    schoolState = tk.StringVar(parent, name="schoolState")
+    SchoolDateEndMonth = tk.IntVar(parent, name="SchoolDateEndMonth")
+    SchoolDateEndYear = tk.IntVar(parent, name="SchoolDateEndYear")
+    GPA = tk.StringVar(parent, name="GPA")
     degreeDetails = tk.Text()
     # ... Declare other StringVar or IntVar variables ...
 
@@ -116,7 +117,7 @@ def makeEducationTabFrame(parent, listEducation):
     newComboBox1.grid(column=curCol,row=curRow)
     curRow += 1
     curCol = 0
-    newLabel, degreeDetails = create_label_text_field(newFrame, "Some details about your time getting this degree:")
+    newLabel, degreeDetails = create_label_text_field(newFrame, "Some details about your time getting this degree:","degreeDetails")
     newLabel.grid(column=curCol,row=curRow)
     curCol+=1
     degreeDetails.grid(column=curCol,row=curRow, columnspan=3)
@@ -132,6 +133,7 @@ def makeEducationTabFrame(parent, listEducation):
                                                             SchoolDateEndMonth.get(), 
                                                             SchoolDateEndYear.get(), 
                                                             GPA.get(), 
-                                                            make_list_from_text(degreeDetails, "degreeDetail"))) # Add other .get() calls
+                                                            make_list_from_text(degreeDetails, "degreeDetail")),
+                                                            name="btnSubmit") # Add other .get() calls
     btnSchoolSubmit.grid(column=curCol, row=curRow)
     return newFrame

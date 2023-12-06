@@ -9,6 +9,7 @@ def addNewSkill(skillName, skillYear):
         "isRelevent": True,
     }
     global userSkills
+    global itemList
 
     # Check if the skill already exists in userSkills
     tempInt = 0
@@ -37,10 +38,10 @@ def skillFrame(parent, listSkill):
     global userSkills
     userSkills = listSkill
 
-    thisFrame = tk.Frame(parent)
+    thisFrame = tk.Frame(parent, name="sklFrame")
     yearsList = list(range(100))
-    skillName = tk.StringVar(value="Skill")
-    skillYear = tk.IntVar(value=0)
+    skillName = tk.StringVar(value="Skill", name="skillName")
+    skillYear = tk.IntVar(value=0, name="skillYear")
 
     # UI setup
     curRow = 0
@@ -54,8 +55,15 @@ def skillFrame(parent, listSkill):
     newCombo.grid(column=1, row=curRow)
     
     curRow += 1
-    btnSkillSubmit = tk.Button(thisFrame, text="Add Skill", 
-                               command=lambda: addNewSkill(skillName.get(), skillYear.get()))
+    btnSkillSubmit = tk.Button(
+        thisFrame, 
+        text="Add Skill", 
+        command=lambda: addNewSkill(
+            skillName.get(), 
+            skillYear.get()
+        ), 
+        name="btnSubmit"
+    )
     btnSkillSubmit.grid(column=0, row=curRow, columnspan=2)
 
     return thisFrame

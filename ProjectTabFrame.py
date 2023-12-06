@@ -14,20 +14,21 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
         "projectDetails":projectDetailsList,
     }
     global userProjects
+    global itemList
     userProjects.append(newProject)
-
+    
 def makeOtherTab(parent, listProjects):
     global userProjects
     userProjects = listProjects
     # ... Declare other StringVar or IntVar variables ...
     
-    newFrame = tk.Frame(parent)
-    projectName = tk.StringVar()
-    hasEvent = tk.BooleanVar()
-    eventName = tk.StringVar()
-    monthEvent = tk.IntVar()
-    yearEvent = tk.IntVar()
-    projectDetailsText = tk.Text()
+    newFrame = tk.Frame(parent, name="otrFrame")
+    projectName = tk.StringVar(parent, name="projectName")
+    hasEvent = tk.BooleanVar(parent, name="hasEvent")
+    eventName = tk.StringVar(parent, name="eventName")
+    monthEvent = tk.IntVar(parent, name="monthEvent")
+    yearEvent = tk.IntVar(parent, name="yearEvent")
+    projectDetailsText = tk.Text(parent, name="projectDetailsText")
     yearsList = [year for year in range(1950, 2050)]
 
     #setting default for auto population
@@ -88,7 +89,8 @@ def makeOtherTab(parent, listProjects):
     currRow += 1
     newLabel, projectDetailsText = create_label_text_field(
         newFrame, 
-        "enter the details of this event: ")
+        "enter the details of this event: ",
+        "projectDetailsText")
     newLabel.grid(column=currCol,row=currRow)
     currCol += 1
     projectDetailsText.grid(column=currCol,row=currRow)
@@ -105,7 +107,8 @@ def makeOtherTab(parent, listProjects):
                                         projectDetailsText, 
                                         "projectDetail"
                                         )
-                                    ))
+                                    ),
+                                    name="btnSubmit")
     newButton.grid(column=currCol,row=currRow)
     #return frame
     return newFrame
