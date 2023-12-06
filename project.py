@@ -10,12 +10,25 @@ from settings_tab_frame import make_settings_tab
 import pip
 
 def install(package):
+    """
+    Install a package using pip. If pip has a 'main' attribute, use that, 
+    otherwise use '_internal.main'. This function is used to ensure that 
+    required packages are installed.
+
+    Args:
+    package (str): The name of the package to install.
+    """
     if hasattr(pip, 'main'):
         pip.main(['install', package])
     else:
         pip._internal.main(['install', package])
 
 def mainApp():
+    """
+    Initializes and runs the main application. This function sets up the tkinter GUI for 
+    the Resume Generator, including tabs for personal information, education, work experience, 
+    skills, projects, and settings. Each tab contains relevant GUI components.
+    """
     global root
     root = tk.Tk()
     root.title("Resume Generator")
