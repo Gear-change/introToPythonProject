@@ -198,6 +198,7 @@ def openRelevencyFrame(*args):
         rMainFrame,
         text="Make resume",
         command=lambda:setRelevenceyFinal(
+            rWindow,
             userFileName.get(),
             userDesc, 
             firstName, 
@@ -215,14 +216,17 @@ def openRelevencyFrame(*args):
     )
     
     newButton.grid(column=curCol, row=curRow)
+    newScrollableFrame.configure(height=100)
     rMainFrame.pack()
     newScrollableFrame.pack()
+
     rFrame.mainloop()
     
 def setRelevenceyFinal(*args):
     #spool out the variables
-    userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    rFrame, userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
     makeResume(
+        rFrame,
         userFileName,
         userDesc.get("1.0", "end-1c"), 
         firstName.get(), 

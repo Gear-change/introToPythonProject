@@ -26,7 +26,7 @@ def getStringHeightNeeded(width, fontSize):
 
 def makeResume(*args):
     #TODO: MAKE THE RESUME PRINT FUNCTION
-    userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    rFrame, userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
     userFileName = userFileName.replace(".", "_")
     userFileName = userFileName.replace("\\", "_")
     userFileName = userFileName.replace("/", "_")
@@ -399,3 +399,4 @@ def makeResume(*args):
     outputLocStr = "Output\ "+userFileName
     outputLocStr.replace(" ", "")
     pdf.output(name=outputLocStr)
+    rFrame.destroy()

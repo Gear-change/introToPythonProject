@@ -165,7 +165,9 @@ genericProject = {
         "isRelevent":True
     }],
 }
-# ... Other generic structures ...
+# ... Other generic structures ....
+
+#instal fpdf2
 if __name__ == '__main__':
     install('fpdf2')
 mainApp()
