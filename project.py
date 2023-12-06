@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import messagebox
 from EducationTabFrame import makeEducationTabFrame
 from ProjectTabFrame import makeOtherTab
 from personalInfoTab import makePersonalInformationtab

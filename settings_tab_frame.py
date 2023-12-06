@@ -8,7 +8,6 @@ from skilltabframe2 import skillFrame, addNewSkill
 from ProjectTabFrame import addNewProject, makeOtherTab
 from relevencyFrame import *
 from EducationTabFrame import *
-from commontools2 import create_combo_set
 
 def replaceQual3(editWindow, thisQual, projectName, hasEvent, eventName, monthEvent, yearEvent, projectDetailsList, *args):
     firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
