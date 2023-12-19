@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from commontools2 import create_combo_set, create_label_entry, create_spin_month_year,create_label_text_field, make_list_from_text
+from relevencyFrame import degreeToString
 
 def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, schoolState, 
                  SchoolDateEndMonth, SchoolDateEndYear, GPA, degreeDetails):
@@ -18,7 +19,29 @@ def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, s
         "dateEndMonth": SchoolDateEndMonth,
         "isRelevent": True
     }
+    degreeString = degreeToString(newEducation)
     global userEducation
+    existingWork = next((degree for degree in userEducation if degreeToString(degree) == degreeString), None)
+    if existingWork:
+        tempInt = 0
+        for degree in userEducation:
+            if degreeToString(degree) == degreeString:
+                break
+            tempInt += 1
+        # Prompt for overwrite
+        stringWork = degreeToString(degree)
+        overwriteSkill = messagebox.askyesno(
+            title="Duplicate Work Detected", 
+            message=f"This {stringWork} is in there, do you wish to overwrite it?"
+            )
+        if overwriteSkill:
+            # Replace the existing skill with the new one, but we want to keep the others
+            userEducation.pop(tempInt)
+            userEducation.append(newEducation)
+            
+    else:
+        # Add the new skill if it doesn't exist
+        userWork.append(newWork)
     userEducation.append(newEducation)
     global itemList
 

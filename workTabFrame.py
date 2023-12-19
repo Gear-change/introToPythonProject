@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import Tcl
 from commontools2 import create_label_entry, create_combo_set, create_spin_month_year, create_label_text_field, make_list_from_text
+from relevencyFrame import workToString
 
 def make_list_from_text_2(text_box_in, string_detail_name):
     newList = list()
@@ -32,15 +33,32 @@ def addWorkToList(userWork2, companyName, companyCity, companyState, OccupationT
         "dateStartMonth":startMonth,
     }
     global userWork
-    userWork = userWork2
-    global itemList
-    userWork.append(newWork)
+    existingWork = next((work for work in userWork if work['companyName'] == companyName), None)
+    if existingWork:
+        tempInt = 0
+        for work in userWork:
+            if work['companyName'] == companyName:
+                break
+            tempInt += 1
+        # Prompt for overwrite
+        stringWork = workToString(work)
+        overwriteSkill = messagebox.askyesno(
+            title="Duplicate Work Detected", 
+            message=f"This {stringWork} is in there, do you wish to overwrite it?"
+            )
+        if overwriteSkill:
+            # Replace the existing skill with the new one, but we want to keep the others
+            userWork.pop(tempInt)
+            userWork.append(newWork)
+            
+    else:
+        # Add the new skill if it doesn't exist
+        userWork.append(newWork)
 
 def WorkFrame(parent, listWork):
     global userWork
     userWork = listWork
     #first the variables and frames
-    Tcl
     thisFrame = tk.Frame(parent, name="worFrame")
     companyName = tk.StringVar(parent, name="companyName")
     companyCity = tk.StringVar(parent, name="companyCity")
