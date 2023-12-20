@@ -21,29 +21,26 @@ def addNewDegree(DegreeType, DegreeField, degreeMinor, schoolName, schoolCity, s
     }
     degreeString = degreeToString(newEducation)
     global userEducation
-    existingWork = next((degree for degree in userEducation if degreeToString(degree) == degreeString), None)
-    if existingWork:
+    existingDegree = next((degree for degree in userEducation if degreeToString(degree) == degreeString), None)
+    if existingDegree:
         tempInt = 0
         for degree in userEducation:
             if degreeToString(degree) == degreeString:
                 break
             tempInt += 1
         # Prompt for overwrite
-        stringWork = degreeToString(degree)
-        overwriteSkill = messagebox.askyesno(
+        overwriteDegree = messagebox.askyesno(
             title="Duplicate Work Detected", 
-            message=f"This {stringWork} is in there, do you wish to overwrite it?"
+            message=f"This {degreeString} is in there, do you wish to overwrite it?"
             )
-        if overwriteSkill:
+        if overwriteDegree:
             # Replace the existing skill with the new one, but we want to keep the others
             userEducation.pop(tempInt)
             userEducation.append(newEducation)
             
     else:
         # Add the new skill if it doesn't exist
-        userWork.append(newWork)
-    userEducation.append(newEducation)
-    global itemList
+        userEducation.append(newEducation)
 
 def degreeToString(degree):
     try:

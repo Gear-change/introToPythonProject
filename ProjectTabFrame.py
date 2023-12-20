@@ -2,6 +2,7 @@ from tkinter import messagebox
 from commontools2 import *
 import tkinter as tk
 from tkinter import ttk
+from relevencyFrame import projectToString
 
 def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, projectDetailsList):
     newProject = {
@@ -14,8 +15,27 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
         "projectDetails":projectDetailsList,
     }
     global userProjects
-    global itemList
-    userProjects.append(newProject)
+    stringProject = projectToString(newProject)
+    existingProject = next((project for project in userProjects if projectToString(project) == stringProject), None)
+    if existingProject:
+        tempInt = 0
+        for project in userProjects:
+            if projectToString(project) == stringProject:
+                break
+            tempInt += 1
+        # Prompt for overwrite
+        overwriteSkill = messagebox.askyesno(
+            title="Duplicate Work Detected", 
+            message=f"This {stringProject} is in there, do you wish to overwrite it?"
+            )
+        if overwriteSkill:
+            # Replace the existing skill with the new one, but we want to keep the others
+            userProjects.pop(tempInt)
+            userProjects.append(newProject)
+            
+    else:
+        # Add the new skill if it doesn't exist
+        userProjects.append(newProject)
     
 def makeOtherTab(parent, listProjects):
     global userProjects

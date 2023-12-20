@@ -33,11 +33,12 @@ def addWorkToList(userWork2, companyName, companyCity, companyState, OccupationT
         "dateStartMonth":startMonth,
     }
     global userWork
-    existingWork = next((work for work in userWork if work['companyName'] == companyName), None)
+    newString = workToString(newWork)
+    existingWork = next((work for work in userWork if workToString(work) == newString), None)
     if existingWork:
         tempInt = 0
         for work in userWork:
-            if work['companyName'] == companyName:
+            if workToString(work) == newString:
                 break
             tempInt += 1
         # Prompt for overwrite

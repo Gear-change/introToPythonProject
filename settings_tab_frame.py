@@ -217,7 +217,7 @@ def editQualification(ItemToEdit, *args):
             tempInt = 0
             workEditing = dict
             for work in userWork:
-                if work["companyName"] == ItemToEdit:
+                if workToString(work) == ItemToEdit:
                     workEditing = work
                     break
                 tempInt += 1
@@ -228,7 +228,7 @@ def editQualification(ItemToEdit, *args):
             tempInt = 0
             degreeEditing = dict
             for degree in userEducation:
-                if degree["degreeField"] == ItemToEdit:
+                if degreeToString(degree) == ItemToEdit:
                     degreeEditing = degree
                     break
                 tempInt += 1
@@ -251,7 +251,7 @@ def editQualification(ItemToEdit, *args):
             tempInt = 0
             projectEditing = dict()
             for project in userProjects:
-                if project["projectName"] == ItemToEdit:
+                if projectToString(project) == ItemToEdit:
                     projectEditing = project
                     break
                 tempInt += 1
@@ -301,7 +301,7 @@ def removeQual(qualToDelete, *args):
         if item2 in userWork[0].keys():
             tempInt = 0
             for work in userWork:
-                if work["companyName"] == item1:
+                if workToString(work) == item1:
                     break
                 tempInt += 1
             userWork.pop(tempInt)
@@ -309,7 +309,7 @@ def removeQual(qualToDelete, *args):
         if item2 in userEducation[0].keys():
             tempInt = 0
             for degree in userEducation:
-                if degree["degreeField"] == item1:
+                if degreeToString(degree) == item1:
                     break
                 tempInt += 1
             userEducation.pop(tempInt)
@@ -325,7 +325,7 @@ def removeQual(qualToDelete, *args):
         if item2 in userProjects[0].keys():
             tempInt = 0
             for project in userProjects:
-                if project["projectName"] == item1:
+                if projectToString(project) == item1:
                     break
                 tempInt += 1
             userProjects.pop(tempInt)
@@ -350,13 +350,13 @@ def getListOfObjects(*args):
     firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
     itemList = list()
     for work in userWork:
-        itemList.append(tuple((work.get("companyName"), "companyName")))
+        itemList.append(tuple((workToString(work), "companyName")))
     for edu in userEducation:
-        itemList.append(tuple((edu.get( "degreeField"), "degreeField")))
+        itemList.append(tuple((degreeToString(edu), "degreeField")))
     for skill in userSkills:
         itemList.append(tuple((skill.get("skillName"), "skillName")))
     for project in userProjects:
-        itemList.append(tuple((project.get("projectName"), "projectName")))
+        itemList.append(tuple((projectToString(project), "projectName")))
     valList = list()
     for ttuple in itemList:
         item1, item2 = ttuple
