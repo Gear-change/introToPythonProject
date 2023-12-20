@@ -24,11 +24,11 @@ def addNewProject(projectName, hasEvent, eventName, monthEvent, yearEvent, proje
                 break
             tempInt += 1
         # Prompt for overwrite
-        overwriteSkill = messagebox.askyesno(
+        overwriteProject = messagebox.askyesno(
             title="Duplicate Work Detected", 
             message=f"This {stringProject} is in there, do you wish to overwrite it?"
             )
-        if overwriteSkill:
+        if overwriteProject:
             # Replace the existing skill with the new one, but we want to keep the others
             userProjects.pop(tempInt)
             userProjects.append(newProject)

@@ -9,6 +9,6 @@ def install(package):
     Args:
     package (str): The name of the package to install.
     """
-    pip.main(['Install', package])
+    pip.main(['install', package])
 
 install('fpdf2')

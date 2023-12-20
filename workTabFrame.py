@@ -43,11 +43,11 @@ def addWorkToList(userWork2, companyName, companyCity, companyState, OccupationT
             tempInt += 1
         # Prompt for overwrite
         stringWork = workToString(work)
-        overwriteSkill = messagebox.askyesno(
+        overwriteWork = messagebox.askyesno(
             title="Duplicate Work Detected", 
             message=f"This {stringWork} is in there, do you wish to overwrite it?"
             )
-        if overwriteSkill:
+        if overwriteWork:
             # Replace the existing skill with the new one, but we want to keep the others
             userWork.pop(tempInt)
             userWork.append(newWork)
