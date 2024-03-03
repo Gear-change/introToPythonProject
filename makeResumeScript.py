@@ -317,10 +317,14 @@ def makeResume(*args):
         else:
             newTempString = ", and ".join(skillYearList[numlist])
             newString = newTempString.replace(", and ", ", ", len(skillYearList[numlist])-2)
-        pdf.cell(
+        newString = "   • " + newString
+        pdf.multi_cell(
+            350,
             txt=newString,
-            new_x=XPos.RIGHT,
-            new_y=YPos.TOP
+            new_x=XPos.END,
+            new_y=YPos.LAST,
+            align=Align.L,
+            wrapmode="WORD"
         )
         if numlist > 0:
             yearString =  str(numlist) + " Year"
@@ -328,13 +332,31 @@ def makeResume(*args):
                 yearString = yearString + "s"
         else:
             yearString = "Entry Level"
+        linkingString = ""
+        startX = pdf.get_x()
         pdf.multi_cell(
             0,
             txt=yearString,
-            new_x=XPos.LMARGIN,
-            new_y=YPos.NEXT,
-            align=Align.R
+            new_x=XPos.START,
+            new_y=YPos.TOP,
+            align=Align.R,
+            wrapmode="WORD"
         )
+        endX = pdf.get_x()
+        pdf.set_x(startX)
+        areaX = int(endX)-int(startX)
+        numberFullStop = areaX*3.4/8
+        tempFullstopCount = 0
+        while(tempFullstopCount < numberFullStop):
+            linkingString += "."
+            tempFullstopCount += 1
+        pdf.cell(
+            w=500,
+            text=linkingString,
+            new_x=XPos.LMARGIN,
+            new_y=YPos.NEXT
+        )
+        
     pdf.multi_cell(
         0,
         text="\t",
