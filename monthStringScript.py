@@ -4,7 +4,7 @@ def monthToString(monthInt):
         case 1:
             monthString = "January"
         case 2:
-            monthString = "Febuary"
+            monthString = "February"
         case 3:
             monthString = "March"
         case 4:

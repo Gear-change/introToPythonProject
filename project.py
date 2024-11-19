@@ -65,7 +65,7 @@ def mainApp():
 
     #skill tab
     
-    newFrame = skillFrame(tab4, userSkills)
+    newFrame = skillFrame(tab4, userSkills, skillCatagorys)
     newFrame.grid(column=0, row=0)
 
     #projectTab
@@ -77,7 +77,7 @@ def mainApp():
 
     newFrame = make_settings_tab(
         tab6, firstName, middleInitial, lastName, userLinkedin, userGithub, 
-        userPhone, userEmail, userWork, userEducation, userSkills, userProjects
+        userPhone, userEmail, userWork, userEducation, userSkills, userProjects, skillCatagorys
     )
     newFrame.grid(column=0, row=0)
 
@@ -90,6 +90,8 @@ global userWork
 global userEducation
 global userSkills
 global userProjects
+global skillCatagorys
+skillCatagorys = []
 userWork = []
 userEducation = []
 userSkills = []
@@ -131,6 +133,11 @@ genericWork = {
     "dateEndMonth":0,
     "dateStartYear":0,
     "dateStartMonth":0,
+}
+genericSkillCat = {
+    "skillCatagory":"",
+    "skillCatNo":0,
+    "CatIsRelevent":True,
 }
 genericSkill = {
     "skillName":"",

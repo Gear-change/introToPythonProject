@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from EducationTabFrame import degreeToString
 from monthStringScript import monthToString
-from makeResumeScript import makeResume
+from makeResumeScript import makeResume, makeText
 from VerticalScrolledFrame import VerticalScrolledFrame
 def setFlag(aVar, var):
         var = aVar.get()
@@ -20,7 +20,8 @@ def CreateNewCheckButton(parent, thisBool, text, uid):
         text=text
     )
     return newCheckButton
-
+def skillCatToString(catagory):
+    return catagory.get("skillCatagory")
 
 def projectToString(project):
     stringProject = ""
@@ -36,8 +37,7 @@ def projectToString(project):
 
 def skillToString(skill):
     skillName = skill.get("skillName")
-    skillYears = skill.get("skillYears")
-    skillString = skillName+(" "+(str(skillYears)))
+    skillString = skillName
     return skillString
 
 def workToString(work):
@@ -56,7 +56,7 @@ def openRelevencyFrame(*args):
     global userSkills
     global userProjects
     global userEducation
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories = args
     #create the main window
     rWindow = tk.Tk()
     rWindow.title("Relevency window")
@@ -172,6 +172,17 @@ def openRelevencyFrame(*args):
         curUID += 1
         newCheckButton.grid(column=curCol,row=curRow)
         curRow += 1
+    curRow += 1
+    for catagory in userCatagories:
+        newCheckButton = CreateNewCheckButton(
+            rMainFrame,
+            catagory["CatIsRelevent"],
+            skillCatToString(catagory),
+            curUID
+        )
+        curUID += 1
+        newCheckButton.grid(column=curCol,row=curRow)
+        curRow += 1
     curRow+=1
     for project in userProjects:
         newCheckButton = CreateNewCheckButton(
@@ -197,7 +208,7 @@ def openRelevencyFrame(*args):
     newButton = tk.Button(
         rMainFrame,
         text="Make resume",
-        command=lambda:setRelevenceyFinal(
+        command=lambda:setupChronology(
             rWindow,
             userFileName.get(),
             userDesc, 
@@ -211,12 +222,37 @@ def openRelevencyFrame(*args):
             userWork, 
             userEducation, 
             userSkills, 
-            userProjects
+            userProjects,
+            userCatagories,
+            pdfCheck = True
             )
     )
     
     newButton.grid(column=curCol, row=curRow)
-    newScrollableFrame.configure(height=100)
+    curRow += 1
+    newButton = tk.Button(
+        rMainFrame,
+        text="Make resume",
+        command=lambda:setupChronology(
+            rWindow,
+            userFileName.get(),
+            userDesc, 
+            firstName, 
+            middleInitial, 
+            lastName, 
+            userLinkedin, 
+            userGithub, 
+            userPhone, 
+            userEmail, 
+            userWork, 
+            userEducation, 
+            userSkills, 
+            userProjects,
+            userCatagories,
+            pdfCheck = False
+            )
+    )
+    newScrollableFrame.configure(height=500)
     rMainFrame.pack()
     newScrollableFrame.pack()
 
@@ -224,21 +260,63 @@ def openRelevencyFrame(*args):
     
 def setRelevenceyFinal(*args):
     #spool out the variables
-    rFrame, userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
-    makeResume(
+    rFrame, userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories, pdfCheck= args
+    if pdfCheck:
+        makeResume(
+            rFrame,
+            userFileName,
+            userDesc.get("1.0", "end-1c"), 
+            firstName.get(), 
+            middleInitial.get(), 
+            lastName.get(), 
+            userLinkedin.get(), 
+            userGithub.get(), 
+            userPhone.get(), 
+            userEmail.get(), 
+            userWork, 
+            userEducation, 
+            userSkills, 
+            userProjects,
+            userCatagories
+        )
+    else:
+        makeText(
+            rFrame,
+            userFileName,
+            userDesc.get("1.0", "end-1c"), 
+            firstName.get(), 
+            middleInitial.get(), 
+            lastName.get(), 
+            userLinkedin.get(), 
+            userGithub.get(), 
+            userPhone.get(), 
+            userEmail.get(), 
+            userWork, 
+            userEducation, 
+            userSkills, 
+            userProjects,
+            userCatagories
+        )
+def setupChronology(*args):
+    rFrame, userFileName, userDesc, firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects,userCatagories, pdfCheck = args
+    userWork.sort(key=lambda d: d["dateEndYear"] , reverse = True)
+    userEducation.sort(key=lambda d: d["dateEndYear"], reverse = True)
+    userProjects.sort(reverse = True, key=lambda d: d["year"])
+    setRelevenceyFinal(
         rFrame,
         userFileName,
-        userDesc.get("1.0", "end-1c"), 
-        firstName.get(), 
-        middleInitial.get(), 
-        lastName.get(), 
-        userLinkedin.get(), 
-        userGithub.get(), 
-        userPhone.get(), 
-        userEmail.get(), 
+        userDesc, 
+        firstName, 
+        middleInitial, 
+        lastName, 
+        userLinkedin, 
+        userGithub, 
+        userPhone, 
+        userEmail, 
         userWork, 
         userEducation, 
         userSkills, 
-        userProjects
+        userProjects,
+        userCatagories,
+        pdfCheck
         )
-    

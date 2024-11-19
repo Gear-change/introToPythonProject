@@ -56,7 +56,7 @@ def makeEducationTabFrame(parent, listEducation):
                  'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 
                  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia',
                  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-    degreeTypeList = [ ' Highschool',  ' Accociate', ' Bachelor', ' Master', ' Doctorate' ]
+    degreeTypeList = [ ' Highschool',  ' Associate', ' Bachelor', ' Master', ' Doctorate' ]
 
     #setting default for auto population
     DegreeField.set("Field")

@@ -133,7 +133,7 @@ def makeEditWindow(thisQual, thingEditing, intItems, args):
 
         case 3:
             #we need a skill frame
-            thisFrame = skillFrame(editWindow, userSkills)
+            thisFrame = skillFrame(editWindow, userSkills, userCatagories)
             thisFrame.setvar("skillName", thingEditing.get("skillName"))
             thisFrame.setvar("skillYear", thingEditing.get("skillYears"))
             
@@ -379,7 +379,8 @@ def load_from_file(*args):
     global userSkills
     global userProjects
     global itemList
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    global userCatagories
+    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories = args
     
     readFile = askopenfile(mode='r', filetypes=[('Text Document', '*.txt'), ('All Files', "*.*")])
     if readFile is not None:
@@ -405,6 +406,8 @@ def load_from_file(*args):
             userSkills.append(item)
         for item in listArgs[4]:
             userProjects.append(item)
+        for item in listArgs[5]:
+            userCatagories.append(item)
         #repack to args
         args = (firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects)
         itemList = getListOfObjects(*args)
@@ -418,7 +421,7 @@ def save_to_file(*args):
     global userEducation
     global userSkills
     global userProjects
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories = args
     PIList = [firstName.get(),middleInitial.get(),lastName.get(),userLinkedin.get(),userGithub.get(),userPhone.get(),userEmail.get()]
     listArgs = []
     listArgs.append(PIList)
@@ -426,6 +429,7 @@ def save_to_file(*args):
     listArgs.append(userEducation)
     listArgs.append(userSkills)
     listArgs.append(userProjects)
+    listArgs.append(userCatagories)
     stringVarOut = ""
     for item in listArgs:
         tempString = stringVarOut + json.dumps(item) + "\n"
@@ -449,7 +453,8 @@ def make_settings_tab(parent, *args):
     global userSkills
     global userProjects
     global new_frame
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
+    global userCatagories
+    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories = args
     new_frame = tk.Frame(parent)
     curcol = 0
     curRow = 0
@@ -480,12 +485,43 @@ def make_settings_tab(parent, *args):
     curcol += 1
     new_combo_box.grid(column=curcol, row=curRow)
     curcol += 1
-    edit_button = tk.Button(new_frame, text=" edit ", command = lambda:editQualification(qualToEdit.get(), firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects))
+    edit_button = tk.Button(
+        new_frame, 
+        text=" edit ", 
+        command = lambda:editQualification(
+            qualToEdit.get(), 
+            firstName, 
+            middleInitial, 
+            lastName, 
+            userLinkedin, 
+            userGithub, 
+            userPhone, 
+            userEmail, 
+            userWork, 
+            userEducation, 
+            userSkills, 
+            userProjects))
     edit_button.grid(column=curcol,row=curRow)
     curRow += 1
     curcol = 0
     qualToDelete = tk.StringVar(new_frame)
-    new_combo_box, new_label  = create_combo_set2(new_frame, "select a Qualification to delete:", qualToDelete, getListOfObjects(firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects), "delCombo")
+    new_combo_box, new_label  = create_combo_set2(
+        new_frame, "select a Qualification to delete:", 
+        qualToDelete, 
+        getListOfObjects(
+            firstName,
+            middleInitial, 
+            lastName, 
+            userLinkedin, 
+            userGithub, 
+            userPhone, 
+            userEmail, 
+            userWork, 
+            userEducation, 
+            userSkills, 
+            userProjects),
+        "delCombo"
+    )
     new_label.grid(column=curcol, row=curRow)
     curcol += 1
     new_combo_box.grid(column=curcol, row=curRow)
@@ -501,5 +537,5 @@ def prepRelevencyFrame(*args):
     global userEducation
     global userSkills
     global userProjects
-    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects = args
-    openRelevencyFrame(firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects)
+    firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories = args
+    openRelevencyFrame(firstName, middleInitial, lastName, userLinkedin, userGithub, userPhone, userEmail, userWork, userEducation, userSkills, userProjects, userCatagories)

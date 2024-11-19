@@ -3,6 +3,8 @@ from tkinter import ttk
 
 def create_combo_set(parent, label_text, input, list_of_values):
     return ttk.Combobox(parent, textvariable=input, values=list_of_values), tk.Label(parent, text=label_text)
+def create_combo_set3(parent, label_text, input, list_of_values, nameOfCombo):
+    return ttk.Combobox(parent, textvariable=input, values=list_of_values, name=nameOfCombo), tk.Label(parent, text=label_text)
 
 def create_label_entry(parent, label_text, input):
     return tk.Entry(parent, textvariable=input), ttk.Label(parent, text=label_text)
