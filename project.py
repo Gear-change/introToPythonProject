@@ -16,148 +16,82 @@ def mainApp():
     global root
     root = tk.Tk()
     root.title("Resume Generator")
+    
+    # Initialize the tab control
     tabControl = ttk.Notebook(root)
-    tab1 = ttk.Frame(tabControl)
-    tab2 = ttk.Frame(tabControl)
-    tab3 = ttk.Frame(tabControl)
-    tab4 = ttk.Frame(tabControl)
-    tab5 = ttk.Frame(tabControl)
-    tab6 = ttk.Frame(tabControl)
 
-    # ... Create other tabs ...
-
-    tabControl.add(tab1, text='Personal Information')
-    tabControl.add(tab2, text='Education')
-    tabControl.add(tab3, text ='Work experience')
-    tabControl.add(tab4, text ='Skills')
-    tabControl.add(tab5, text ='Other')
-    tabControl.add(tab6, text ='Output/print/load')
-
-    # ... Add other tabs ...
-
+    # Create and add tabs to the tab control
+    tab_labels = ['Personal Information', 'Education', 'Work experience', 'Skills', 'Other', 'Output/print/load']
+    tabs = [ttk.Frame(tabControl) for _ in tab_labels]
+    for tab, label in zip(tabs, tab_labels):
+        tabControl.add(tab, text=label)
+    
     tabControl.pack(expand=1, fill="both")
 
-    # Personal Information Tab
-    firstName = tk.StringVar()
-    middleInitial = tk.StringVar()
-    lastName = tk.StringVar()
-    userLinkedin = tk.StringVar()
-    userGithub = tk.StringVar()
-    userPhone = tk.StringVar()
-    userEmail = tk.StringVar()
-    PIFrame = makePersonalInformationtab(
-        tab1, firstName, middleInitial, lastName, userLinkedin, 
-        userGithub, userPhone, userEmail
-    )
-    PIFrame.grid(column=0,row=0)
+    # Create user input variables
+    user_info_vars = {
+        'firstName': tk.StringVar(),
+        'middleInitial': tk.StringVar(),
+        'lastName': tk.StringVar(),
+        'userLinkedin': tk.StringVar(),
+        'userGithub': tk.StringVar(),
+        'userPhone': tk.StringVar(),
+        'userEmail': tk.StringVar()
+    }
 
-    # ... Add other personal information entries ...
-    
-    # Education Tab
+    # Initialize frames for each tab
+    frames = [
+        makePersonalInformationtab(tabs[0], **user_info_vars),
+        makeEducationTabFrame(tabs[1], userEducation),
+        WorkFrame(tabs[2], userWork),
+        skillFrame(tabs[3], userSkills, skillCatagorys),
+        makeOtherTab(tabs[4], userProjects),
+        make_settings_tab(
+            tabs[5], 
+            user_info_vars['firstName'], user_info_vars['middleInitial'], 
+            user_info_vars['lastName'], user_info_vars['userLinkedin'], 
+            user_info_vars['userGithub'], user_info_vars['userPhone'], 
+            user_info_vars['userEmail'], userWork, userEducation, userSkills, 
+            userProjects, skillCatagorys
+        )
+    ]
 
-    newFrame = makeEducationTabFrame(tab2, userEducation)
-    newFrame.grid(column=0,row=0)
+    # Add frames to respective tabs
+    for frame in frames:
+        frame.grid(column=0, row=0)
 
-    # work tab
-
-    newFrame = WorkFrame(tab3, userWork)
-    newFrame.grid(column=0, row=0)
-
-    #skill tab
-    
-    newFrame = skillFrame(tab4, userSkills, skillCatagorys)
-    newFrame.grid(column=0, row=0)
-
-    #projectTab
-
-    newFrame = makeOtherTab(tab5, userProjects)
-    newFrame.grid(column=0, row=0)
-
-    # ... Now the fun begins.
-
-    newFrame = make_settings_tab(
-        tab6, firstName, middleInitial, lastName, userLinkedin, userGithub, 
-        userPhone, userEmail, userWork, userEducation, userSkills, userProjects, skillCatagorys
-    )
-    newFrame.grid(column=0, row=0)
-
-    # ... Other GUI elements ...
-
+    # Run the main loop
     root.mainloop()
 
 # Global Variables
-global userWork
-global userEducation
-global userSkills
-global userProjects
-global skillCatagorys
+global userWork, userEducation, userSkills, userProjects, skillCatagorys
 skillCatagorys = []
 userWork = []
 userEducation = []
 userSkills = []
 userProjects = []
+
+# Generic structures for initializing user data
 genericEducation = {
-    "degreeType":"",
-    "degreeField":"",
-    "degreeMinor":"",
-    "gradeGPA":0,
-    "schoolName":"",
-    "schoolCity":"",
-    "schoolState":"",
-    "dateEndYear":0,
-    "dateEndMonth":0,
-    "isRelevent":True,
-    "degreeDetails":[
-        {
-            "degreeDetail":"",
-            "isRelevent":True
-        }
-    ],
+    "degreeType": "", "degreeField": "", "degreeMinor": "",
+    "gradeGPA": 0, "schoolName": "", "schoolCity": "", "schoolState": "",
+    "dateEndYear": 0, "dateEndMonth": 0, "isRelevent": True,
+    "degreeDetails": [{"degreeDetail": "", "isRelevent": True}],
 }
 genericWork = {
-    "companyName":"",
-    "companyCity":"",
-    "companyState":"",
-    "OccupationTitle":[{
-        "OccupationTitle":"",
-        "isRelevent":True,
-        "titleNo":0
-    }],
-    "occupationDetails":[{
-        "OccupationDetail":"",
-        "isRelevent":True
-    }],
-    #is relevent should only make them sorted between them for only this one, the other ones don't print if it is not relevent.
-    "isRelevent":True,
-    "dateEndYear":0,
-    "dateEndMonth":0,
-    "dateStartYear":0,
-    "dateStartMonth":0,
+    "companyName": "", "companyCity": "", "companyState": "",
+    "OccupationTitle": [{"OccupationTitle": "", "isRelevent": True, "titleNo": 0}],
+    "occupationDetails": [{"OccupationDetail": "", "isRelevent": True}],
+    "isRelevent": True, "dateEndYear": 0, "dateEndMonth": 0,
+    "dateStartYear": 0, "dateStartMonth": 0,
 }
-genericSkillCat = {
-    "skillCatagory":"",
-    "skillCatNo":0,
-    "CatIsRelevent":True,
-}
-genericSkill = {
-    "skillName":"",
-    "skillYears":0,
-    "isRelevent":True,
-}
+genericSkillCat = {"skillCatagory": "", "skillCatNo": 0, "CatIsRelevent": True}
+genericSkill = {"skillName": "", "skillYears": 0, "isRelevent": True}
 genericProject = {
-    "projectName":"",
-    "hasEvent":True,
-    "eventName":"",
-    "month":0,
-    "year":0,
-    "isRelevent":True,
-    "projectDetails":[{
-        "projectDetail":"",
-        "isRelevent":True
-    }],
+    "projectName": "", "hasEvent": True, "eventName": "", 
+    "month": 0, "year": 0, "isRelevent": True,
+    "projectDetails": [{"projectDetail": "", "isRelevent": True}],
 }
-# ... Other generic structures ....
 
-#instal fpdf2
+# Run the main application
 mainApp()
-

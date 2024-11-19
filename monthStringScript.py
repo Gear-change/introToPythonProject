@@ -1,4 +1,13 @@
 def monthToString(monthInt):
+    """
+    Converts an integer representation of a month to its string name.
+    
+    Args:
+        monthInt (int): The integer representation of the month (1-12).
+    
+    Returns:
+        str: The string name of the month.
+    """
     monthString = None
     match monthInt:
         case 1:
